@@ -4,6 +4,7 @@
 #define __lllib__ChunkHeader__
 
 #include <cstdint>
+#include <iostream>
 
 namespace lllib {
     class ChunkHeader {
@@ -13,6 +14,8 @@ namespace lllib {
         int32_t chunkLength;
         int32_t nextChunkId;
         int32_t offset;
+
+        static ChunkHeader decode(std::ifstream& ifs);
     };
 }
 

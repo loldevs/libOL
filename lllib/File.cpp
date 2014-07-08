@@ -3,5 +3,8 @@
 #include "File.h"
 
 namespace lllib {
-    File::File(std::ifstream& ifs) : _ifs(ifs) {};
+    File File::decode(std::ifstream& ifs) {
+        File file;
+        return file;
+    }
 }

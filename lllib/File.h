@@ -12,8 +12,6 @@
 
 namespace lllib {
     class File {
-    private:
-        std::ifstream& _ifs;
     public:
         Header header;
         std::string metadata;
@@ -21,7 +19,7 @@ namespace lllib {
         std::vector<ChunkHeader> chunkHeaders;
         std::vector<ChunkHeader> payloadHeaders;
 
-        File(std::ifstream&);
+        static File decode(std::ifstream& ifs);
     };
 }
 

@@ -18,6 +18,8 @@ namespace lllib {
         int32_t keyframeInterval;
         int16_t encryptionKeyLength;
         std::vector<uint8_t> encryptionKey;
+
+        static PayloadHeader decode(std::ifstream& ifs);
     };
 }
 

@@ -10,7 +10,8 @@ int main(int argc, const char * argv[])
 
     std::ifstream ifs("/Users/toulouse/code/lmao/rofl/22923174.rofl", std::ios::binary);
 
-    __attribute__((unused)) lllib::File file(ifs);
+    lllib::File file = lllib::File::decode(ifs);
+
     //std::cout << file << endl;
     return 0;
 }

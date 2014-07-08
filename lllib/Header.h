@@ -3,8 +3,9 @@
 #ifndef __lllib__Header__
 #define __lllib__Header__
 
-#include <cstdint>
 #include <array>
+#include <cstdint>
+#include <iostream>
 
 namespace lllib {
     class Header {
@@ -18,6 +19,8 @@ namespace lllib {
         int32_t payloadHeaderOffset;
         int32_t payloadHeaderLength;
         int32_t payloadOffset;
+
+        static Header decode(std::ifstream& ifs);
     };
 }
 
