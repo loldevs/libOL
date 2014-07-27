@@ -9,14 +9,14 @@
 namespace lllib {
     class PayloadHeader {
     public:
-        int64_t gameId;
-        int32_t gameLength;
-        int32_t keyframeCount;
-        int32_t chunkCount;
-        int32_t endStartupChunkId;
-        int32_t startGameChunkId;
-        int32_t keyframeInterval;
-        int16_t encryptionKeyLength;
+        uint64_t gameId;
+        uint32_t gameLength;
+        uint32_t keyframeCount;
+        uint32_t chunkCount;
+        uint32_t endStartupChunkId;
+        uint32_t startGameChunkId;
+        uint32_t keyframeInterval;
+        uint16_t encryptionKeyLength;
         std::vector<uint8_t> encryptionKey;
 
         static PayloadHeader decode(std::ifstream& ifs);

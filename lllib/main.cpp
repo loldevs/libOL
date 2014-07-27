@@ -8,11 +8,11 @@
 int main(int argc, const char * argv[])
 {
 
-    std::ifstream ifs("/Users/toulouse/code/lmao/rofl/22923174.rofl", std::ios::binary);
+    std::ifstream ifs("/Users/toulouse/code/lol/lmao/rofl/22923174.rofl", std::ios::binary);
 
     lllib::File file = lllib::File::decode(ifs);
 
-    //std::cout << file << endl;
+    //std::cout << file << std::endl;
     return 0;
 }
 

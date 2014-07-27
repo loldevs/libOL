@@ -12,13 +12,13 @@ namespace lllib {
     public:
         std::array<uint8_t, 6> magic;
         std::array<uint8_t, 256> signature;
-        int16_t headerlength;
-        int32_t fileLength;
-        int32_t metadataOffset;
-        int32_t metadataLength;
-        int32_t payloadHeaderOffset;
-        int32_t payloadHeaderLength;
-        int32_t payloadOffset;
+        uint16_t headerlength;
+        uint32_t fileLength;
+        uint32_t metadataOffset;
+        uint32_t metadataLength;
+        uint32_t payloadHeaderOffset;
+        uint32_t payloadHeaderLength;
+        uint32_t payloadOffset;
 
         static Header decode(std::ifstream& ifs);
     };
