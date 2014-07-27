@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6BC7C2C1198492F1004420B9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC7C2C0198492F1004420B9 /* libz.dylib */; };
+		6BC7C2CE1984EA16004420B9 /* blowfish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BC7C2CA1984EA16004420B9 /* blowfish.cpp */; };
 		6BD9D927196BCCF200F0EDF8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BD9D926196BCCF200F0EDF8 /* main.cpp */; };
 		6BD9D929196BCCF200F0EDF8 /* lllib.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6BD9D928196BCCF200F0EDF8 /* lllib.1 */; };
 		6BD9D93F196BDE0F00F0EDF8 /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BD9D93D196BDE0F00F0EDF8 /* File.cpp */; };
@@ -31,6 +32,8 @@
 
 /* Begin PBXFileReference section */
 		6BC7C2C0198492F1004420B9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		6BC7C2CA1984EA16004420B9 /* blowfish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blowfish.cpp; sourceTree = "<group>"; };
+		6BC7C2CB1984EA16004420B9 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
 		6BD9D923196BCCF200F0EDF8 /* lllib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lllib; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BD9D926196BCCF200F0EDF8 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6BD9D928196BCCF200F0EDF8 /* lllib.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = lllib.1; sourceTree = "<group>"; };
@@ -56,6 +59,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6BC7C2C81984EA16004420B9 /* Blowfish */ = {
+			isa = PBXGroup;
+			children = (
+				6BC7C2CA1984EA16004420B9 /* blowfish.cpp */,
+				6BC7C2CB1984EA16004420B9 /* blowfish.h */,
+			);
+			path = Blowfish;
+			sourceTree = "<group>";
+		};
 		6BD9D91A196BCCF200F0EDF8 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +88,7 @@
 		6BD9D925196BCCF200F0EDF8 /* lllib */ = {
 			isa = PBXGroup;
 			children = (
+				6BC7C2C81984EA16004420B9 /* Blowfish */,
 				6BD9D940196BDEA600F0EDF8 /* ChunkHeader.cpp */,
 				6BD9D941196BDEA600F0EDF8 /* ChunkHeader.h */,
 				6BD9D93D196BDE0F00F0EDF8 /* File.cpp */,
@@ -144,6 +157,7 @@
 				6BD9D942196BDEA600F0EDF8 /* ChunkHeader.cpp in Sources */,
 				6BD9D93F196BDE0F00F0EDF8 /* File.cpp in Sources */,
 				6BD9D945196BDEAC00F0EDF8 /* Header.cpp in Sources */,
+				6BC7C2CE1984EA16004420B9 /* blowfish.cpp in Sources */,
 				6BD9D927196BCCF200F0EDF8 /* main.cpp in Sources */,
 				6BD9D948196BDEB600F0EDF8 /* PayloadHeader.cpp in Sources */,
 			);
@@ -255,6 +269,7 @@
 				6BD9D92E196BCCF200F0EDF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
