@@ -20,6 +20,11 @@ namespace lllib {
         ifs.seekg(file.header.payloadHeaderOffset);
         file.payloadHeader = PayloadHeader::decode(ifs);
 
+        // Chunk and Keyframe headers
+        ifs.seekg(file.header.payloadHeaderOffset + file.header.payloadHeaderLength);
+        file.chunkHeaders = ChunkHeader::decodeMultiple(ifs, file.payloadHeader.chunkCount);
+        file.keyframeHeaders = ChunkHeader::decodeMultiple(ifs, file.payloadHeader.keyframeCount);
+
         return file;
     }
 }

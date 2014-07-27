@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <vector>
 
 namespace lllib {
     class ChunkHeader {
@@ -15,6 +16,7 @@ namespace lllib {
         int32_t nextChunkId;
         int32_t offset;
 
+        static std::vector<ChunkHeader> decodeMultiple(std::ifstream& ifs, int count);
         static ChunkHeader decode(std::ifstream& ifs);
     };
 }

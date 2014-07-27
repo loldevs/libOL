@@ -17,7 +17,7 @@ namespace lllib {
         std::string metadata;
         PayloadHeader payloadHeader;
         std::vector<ChunkHeader> chunkHeaders;
-        std::vector<ChunkHeader> payloadHeaders;
+        std::vector<ChunkHeader> keyframeHeaders;
 
         static File decode(std::ifstream& ifs);
     };
