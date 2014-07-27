@@ -2,7 +2,67 @@
 
 #include "PayloadHeader.h"
 
+#include <cassert>
 #include <fstream>
+
+static inline std::vector<uint8_t> b64Decode(std::string const& input) {
+    if (input.length() == 0) {
+        return std::vector<uint8_t>();
+    }
+    assert(input.length() % 4 == 0);
+
+    size_t padding = 0;
+    if (input[input.size() - 1] == '=') {
+        padding++;
+    }
+    if (input[input.size() - 1] == '=') {
+        padding++;
+    }
+
+    std::vector<uint8_t> result;
+    result.reserve(3 * (input.length() / 4) - padding);
+
+    int decodedBytes = 0;
+    uint32_t bytes = 0;
+    for (auto cursor = input.begin(); cursor < input.end(); cursor++) {
+        char character = *cursor;
+        if (character >= 'A' && character <= 'Z') {
+            bytes |= character - 'A';
+        } else if (character >= 'a' && character <= 'z') {
+            bytes |= character - 'a' + 26;
+        } else if (character >= '0' && character <= '9') {
+            bytes |= character - '0' + 52;
+        } else if (character == '+') {
+            bytes |= 62;
+        } else if (character == '/') {
+            bytes |= 63;
+        } else if (character == '=') {
+            auto fromEnd = input.end() - cursor;
+            if (fromEnd == 1) {
+                result.push_back((bytes >> 16) & 0xff);
+                result.push_back((bytes >> 8) & 0xff);
+                return result;
+            } else if (fromEnd == 2) {
+                result.push_back((bytes >> 10) & 0xff);
+                return result;
+            }
+        }
+
+        if (decodedBytes == 3) {
+            result.push_back((bytes >> 16) & 0xff);
+            result.push_back((bytes >> 8) & 0xff);
+            result.push_back((bytes) & 0xff);
+            bytes = 0;
+        }
+
+        decodedBytes = (decodedBytes + 1) % 4;
+        bytes <<= 6;
+    }
+
+    return result;
+}
+
+
 
 namespace lllib {
     PayloadHeader PayloadHeader::decode(std::ifstream& ifs) {
