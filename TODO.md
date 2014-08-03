@@ -1,3 +1,4 @@
+* Rename to libol (so linking is -lol ;) )
 * Decryption (can just use system zlib)
 	* Use system zlib
 	* Make the Blowfish code less bad (use vector<uint8_t> instead of string
