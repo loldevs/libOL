@@ -122,6 +122,16 @@ xcuserdata
 
 *.moved-aside
 
+####
+# CMake
+# Ignore CMake-generated files
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+LibOL.xcodeproj
 
 ####
 # UNKNOWN: recommended by others, but I can't discover what these files are
