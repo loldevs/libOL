@@ -1,13 +1,13 @@
 //  Copyright (c) 2014 Andrew Toulouse. All rights reserved.
 
-#ifndef __lllib__ChunkHeader__
-#define __lllib__ChunkHeader__
+#ifndef __libol__ChunkHeader__
+#define __libol__ChunkHeader__
 
 #include <cstdint>
 #include <iostream>
 #include <vector>
 
-namespace lllib {
+namespace libol {
     class ChunkHeader {
     public:
         int32_t chunkId;
@@ -21,4 +21,4 @@ namespace lllib {
     };
 }
 
-#endif /* defined(__lllib__ChunkHeader__) */
+#endif /* defined(__libol__ChunkHeader__) */

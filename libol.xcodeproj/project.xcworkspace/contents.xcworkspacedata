@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:lllib.xcodeproj">
+      location = "self:libol.xcodeproj">
    </FileRef>
 </Workspace>

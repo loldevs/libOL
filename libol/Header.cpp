@@ -4,7 +4,7 @@
 
 #include <fstream>
 
-namespace lllib {
+namespace libol {
     Header Header::decode(std::ifstream& ifs) {
         Header header;
         ifs.read(reinterpret_cast<char *>(header.magic.data()), header.magic.size());

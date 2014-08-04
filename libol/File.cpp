@@ -4,7 +4,7 @@
 
 #include <fstream>
 
-namespace lllib {
+namespace libol {
     File File::decode(std::ifstream& ifs) {
         File file;
 

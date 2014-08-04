@@ -1,12 +1,12 @@
 //  Copyright (c) 2014 Andrew Toulouse. All rights reserved.
 
-#ifndef __lllib__PayloadHeader__
-#define __lllib__PayloadHeader__
+#ifndef __libol__PayloadHeader__
+#define __libol__PayloadHeader__
 
 #include <cstdint>
 #include <vector>
 
-namespace lllib {
+namespace libol {
     class PayloadHeader {
     public:
         uint64_t gameId;
@@ -23,4 +23,4 @@ namespace lllib {
     };
 }
 
-#endif /* defined(__lllib__PayloadHeader__) */
+#endif /* defined(__libol__PayloadHeader__) */

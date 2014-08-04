@@ -4,7 +4,7 @@
 
 #include <fstream>
 
-namespace lllib {
+namespace libol {
 
     inline void decodeInPlace(std::ifstream& ifs, ChunkHeader& header) {
         ifs.read(reinterpret_cast<char *>(&header.chunkId), sizeof(header.chunkId));
@@ -17,14 +17,14 @@ namespace lllib {
     std::vector<ChunkHeader> ChunkHeader::decodeMultiple(std::ifstream& ifs, int count) {
         auto headers = std::vector<ChunkHeader>(count);
         for (int i = 0; i < count; i++) {
-            lllib::decodeInPlace(ifs, headers[i]);
+            libol::decodeInPlace(ifs, headers[i]);
         }
         return headers;
     }
 
     ChunkHeader ChunkHeader::decode(std::ifstream& ifs) {
         ChunkHeader chunkHeader;
-        lllib::decodeInPlace(ifs, chunkHeader);
+        libol::decodeInPlace(ifs, chunkHeader);
         return chunkHeader;
     }
 }

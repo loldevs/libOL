@@ -1,13 +1,13 @@
 //  Copyright (c) 2014 Andrew Toulouse. All rights reserved.
 
-#ifndef __lllib__Header__
-#define __lllib__Header__
+#ifndef __libol__Header__
+#define __libol__Header__
 
 #include <array>
 #include <cstdint>
 #include <iostream>
 
-namespace lllib {
+namespace libol {
     class Header {
     public:
         std::array<uint8_t, 6> magic;
@@ -24,4 +24,4 @@ namespace lllib {
     };
 }
 
-#endif /* defined(__lllib__Header__) */
+#endif /* defined(__libol__Header__) */

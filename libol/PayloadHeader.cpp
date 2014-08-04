@@ -64,7 +64,7 @@ static inline std::vector<uint8_t> b64Decode(std::string const& input) {
 
 
 
-namespace lllib {
+namespace libol {
     PayloadHeader PayloadHeader::decode(std::ifstream& ifs) {
         PayloadHeader payloadHeader;
         ifs.read(reinterpret_cast<char *>(&payloadHeader.gameId), sizeof(payloadHeader.gameId));

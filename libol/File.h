@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Andrew Toulouse. All rights reserved.
 
-#ifndef __lllib__File__
-#define __lllib__File__
+#ifndef __libol__File__
+#define __libol__File__
 
 #include <iostream>
 #include <vector>
@@ -10,7 +10,7 @@
 #include "Header.h"
 #include "PayloadHeader.h"
 
-namespace lllib {
+namespace libol {
     class File {
     public:
         Header header;
@@ -23,4 +23,4 @@ namespace lllib {
     };
 }
 
-#endif /* defined(__lllib__File__) */
+#endif /* defined(__libol__File__) */
