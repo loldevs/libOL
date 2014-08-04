@@ -1,4 +1,5 @@
-//  Copyright (c) 2014 Andrew Toulouse. All rights reserved.
+// Copyright (c) 2014 Andrew Toulouse.
+// Distributed under the MIT License.
 
 #include "Header.h"
 
