@@ -1,5 +1,5 @@
 ### Configuration
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8)
 
 project (LibOL)
 
@@ -7,23 +7,17 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-  if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-  endif()
-else()
-  message(STATUS "The compiler ${CMAKE_CXX_COMPILER} does not seem to support C++11.")
-endif()
+set(CMAKE_CXX_FLAGS                "${CMAKE_CXX_FLAGS} -Wall -Wpedantic -std=c++11")
+set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -g")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wpedantic")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+endif()
 
 include_directories ("${PROJECT_SOURCE_DIR}/include")
 
 ### LibOL
-add_library(LibOL
+add_library(OL
   libol/Blowfish/blowfish.cpp
   libol/ChunkHeader.cpp
   libol/File.cpp
@@ -35,5 +29,5 @@ add_library(LibOL
 find_package(ZLIB REQUIRED)
 if (ZLIB_FOUND)
     include_directories(${ZLIB_INCLUDE_DIRS})
-    target_link_libraries(LibOL ${ZLIB_LIBRARIES})
+    target_link_libraries(OL ${ZLIB_LIBRARIES})
 endif(ZLIB_FOUND)
