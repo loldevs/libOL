@@ -1,7 +1,7 @@
 ### Configuration
 cmake_minimum_required(VERSION 2.8)
 
-project(LibOL)
+project(libOL)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -16,17 +16,17 @@ endif()
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
-### LibOL
+### libOL
 set(LIBOL_SOURCES
-  src/libol/Blowfish/blowfish.cpp
-  src/libol/ChunkHeader.cpp
-  src/libol/File.cpp
-  src/libol/Header.cpp
-  src/libol/PayloadHeader.cpp
+  src/libOL/Blowfish/blowfish.cpp
+  src/libOL/ChunkHeader.cpp
+  src/libOL/File.cpp
+  src/libOL/Header.cpp
+  src/libOL/PayloadHeader.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")
-  FILE(GLOB_RECURSE LIBOL_INC "src/libol/*.h")
+  FILE(GLOB_RECURSE LIBOL_INC "src/libOL/*.h")
   SET(LIBOL_SOURCES ${LIBOL_SOURCES} ${LIBOL_INC})
 endif()
 
@@ -39,16 +39,16 @@ if (ZLIB_FOUND)
   target_link_libraries(OL ${ZLIB_LIBRARIES})
 endif(ZLIB_FOUND)
 
-### Test LibOL
+### Test libOL
 set(LIBOL_TEST_SOURCES
-  src/libol_test/main.cpp
+  src/libOL_test/main.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")
-  FILE(GLOB_RECURSE LIBOL_TEST_INC "src/libol_test/*.h")
+  FILE(GLOB_RECURSE LIBOL_TEST_INC "src/libOL_test/*.h")
   SET(LIBOL_TEST_SOURCES ${LIBOL_TEST_SOURCES} ${LIBOL_TEST_INC})
 endif()
 
-add_executable(testLibOL ${LIBOL_TEST_SOURCES})
-target_link_libraries(testLibOL OL)
+add_executable(libOL_test ${LIBOL_TEST_SOURCES})
+target_link_libraries(libOL_test OL)
 
