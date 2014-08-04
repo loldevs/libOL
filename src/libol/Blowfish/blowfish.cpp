@@ -7,7 +7,7 @@
 //
 
 #include "blowfish.h"
-#include <cstring>
+
 #include <algorithm>
 
 #if !defined(__LITTLE_ENDIAN__) and !defined(__BIG_ENDIAN__)
@@ -242,7 +242,7 @@ namespace {
         return gcd;
     }
     
-    size_t PKCS5PaddingLength(const std::string& data) {
+    size_t PKCS5PaddingLength(const std::vector<uint8_t> &data) {
         if (data.empty()) return 0;
         char length = data[data.size() - 1];
         if (length > 0 && length <= 8) {
@@ -261,12 +261,12 @@ namespace {
     
 }; // anonymous namespace
 
-void Blowfish::SetKey(const std::string& key)
+void Blowfish::SetKey(const std::vector<uint8_t> &key)
 {
     SetKey(key.data(), key.size());
 }
 
-void Blowfish::SetKey(const char* key, size_t byte_length)
+void Blowfish::SetKey(const uint8_t *key, size_t byte_length)
 {
     std::memcpy(pary_, initial_pary, sizeof(initial_pary));
     std::memcpy(sbox_, initial_sbox, sizeof(initial_sbox));
@@ -319,24 +319,24 @@ void Blowfish::SetKey(const char* key, size_t byte_length)
     }
 }
 
-void Blowfish::Encrypt(std::string* dst, const std::string& src) const
+void Blowfish::Encrypt(std::vector<uint8_t> *dst, const std::vector<uint8_t> &src) const
 {
-    std::string padded_data = src;
+    std::vector<uint8_t> padded_data = src;
     
-    size_t padding_length = src.length() % sizeof(uint64_t);
+    size_t padding_length = src.size() % sizeof(uint64_t);
     if (padding_length == 0) 
         padding_length = sizeof(uint64_t);
     else
         padding_length = sizeof(uint64_t) - padding_length;
     for (size_t i = 0; i < padding_length; ++i) {
-        padded_data += static_cast<char>(padding_length);
+        padded_data.push_back(static_cast<uint8_t>(padding_length));
     }
     
     dst->resize(padded_data.size());
     Encrypt(&(*dst)[0], padded_data.data(), padded_data.size());
 }
 
-void Blowfish::Decrypt(std::string* dst, const std::string& src) const
+void Blowfish::Decrypt(std::vector<uint8_t> *dst, const std::vector<uint8_t> &src) const
 {
     dst->resize(src.size());
     Decrypt(&(*dst)[0], src.data(), src.size());
@@ -344,7 +344,7 @@ void Blowfish::Decrypt(std::string* dst, const std::string& src) const
     dst->resize(dst->size() - padding_length);
 }
 
-void Blowfish::Encrypt(char* dst, const char* src, size_t byte_length) const
+void Blowfish::Encrypt(uint8_t *dst, const uint8_t *src, size_t byte_length) const
 {
     if (dst != src)
     {
@@ -359,7 +359,7 @@ void Blowfish::Encrypt(char* dst, const char* src, size_t byte_length) const
     }
 }
 
-void Blowfish::Decrypt(char* dst, const char* src, size_t byte_length) const
+void Blowfish::Decrypt(uint8_t *dst, const uint8_t *src, size_t byte_length) const
 {
     if (dst != src)
     {

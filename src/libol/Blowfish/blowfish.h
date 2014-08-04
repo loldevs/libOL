@@ -11,24 +11,22 @@
 #ifndef __blowfish__
 #define __blowfish__
 
-#include <stdint.h>
-#include <cstddef>
-#include <string>
+#include <vector>
 
 class Blowfish {
 public:
-    void SetKey(const std::string& key);
-    void SetKey(const char* key, size_t byte_length);
+    void SetKey(const std::vector<uint8_t> &key);
+    void SetKey(const uint8_t *key, size_t byte_length);
     
     // Buffer will be padded with PKCS #5 automatically
     // "dst" and "src" must be different instance
-    void Encrypt(std::string* dst, const std::string& src) const;
-    void Decrypt(std::string* dst, const std::string& src) const;
+    void Encrypt(std::vector<uint8_t> *dst, const std::vector<uint8_t> &src) const;
+    void Decrypt(std::vector<uint8_t> *dst, const std::vector<uint8_t> &src) const;
     
     // Buffer length must be a multiple of the block length (64bit)
-    void Encrypt(char* dst, const char* src, size_t byte_length) const;
-    void Decrypt(char* dst, const char* src, size_t byte_length) const;
-    
+    void Encrypt(uint8_t *dst, const uint8_t *src, size_t byte_length) const;
+    void Decrypt(uint8_t *dst, const uint8_t *src, size_t byte_length) const;
+
 private:
     void EncryptBlock(uint32_t *left, uint32_t *right) const;
     void DecryptBlock(uint32_t *left, uint32_t *right) const;
