@@ -4,7 +4,7 @@
 #ifndef __libol__PayloadHeader__
 #define __libol__PayloadHeader__
 
-#include <cstdint>
+#include <iostream>
 #include <vector>
 
 namespace libol {
@@ -18,7 +18,9 @@ namespace libol {
         uint32_t startGameChunkId;
         uint32_t keyframeInterval;
         uint16_t encryptionKeyLength;
-        std::vector<uint8_t> encryptionKey;
+        std::string encryptionKey;
+
+        std::vector<uint8_t> getDecodedEncryptionKey();
 
         static PayloadHeader decode(std::ifstream& ifs);
     };

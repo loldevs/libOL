@@ -6,6 +6,8 @@
 #include <cassert>
 #include <fstream>
 
+#include "Blowfish/blowfish.h"
+
 static inline std::vector<uint8_t> b64Decode(std::string const& input) {
     if (input.length() == 0) {
         return std::vector<uint8_t>();
@@ -63,9 +65,20 @@ static inline std::vector<uint8_t> b64Decode(std::string const& input) {
     return result;
 }
 
-
-
 namespace libol {
+    std::vector<uint8_t> PayloadHeader::getDecodedEncryptionKey() {
+        auto encryptedKeyBytes = b64Decode(this->encryptionKey);
+
+        auto gameIdStr = std::to_string(gameId);
+        auto gameIdVec = std::vector<uint8_t>{gameIdStr.begin(), gameIdStr.end()};
+
+        auto blowfish = Blowfish{};
+        blowfish.SetKey(gameIdVec);
+        std::vector<uint8_t> out;
+        blowfish.Decrypt(&out, encryptedKeyBytes);
+        return out;
+    }
+
     PayloadHeader PayloadHeader::decode(std::ifstream& ifs) {
         PayloadHeader payloadHeader;
         ifs.read(reinterpret_cast<char *>(&payloadHeader.gameId), sizeof(payloadHeader.gameId));
