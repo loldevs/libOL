@@ -23,6 +23,7 @@ set(LIBOL_SOURCES
   src/libOL/File.cpp
   src/libOL/Header.cpp
   src/libOL/PayloadHeader.cpp
+  src/libOL/Chunks.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")
