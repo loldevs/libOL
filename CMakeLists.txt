@@ -14,16 +14,15 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 endif()
 
-include_directories ("${PROJECT_SOURCE_DIR}/include")
+include_directories ("${PROJECT_SOURCE_DIR}/src")
 
 ### LibOL
 add_library(OL
-  libol/Blowfish/blowfish.cpp
-  libol/ChunkHeader.cpp
-  libol/File.cpp
-  libol/Header.cpp
-  libol/main.cpp
-  libol/PayloadHeader.cpp
+  src/libol/Blowfish/blowfish.cpp
+  src/libol/ChunkHeader.cpp
+  src/libol/File.cpp
+  src/libol/Header.cpp
+  src/libol/PayloadHeader.cpp
 )
 
 find_package(ZLIB REQUIRED)
@@ -31,3 +30,11 @@ if (ZLIB_FOUND)
     include_directories(${ZLIB_INCLUDE_DIRS})
     target_link_libraries(OL ${ZLIB_LIBRARIES})
 endif(ZLIB_FOUND)
+
+### Test LibOL
+set(TEST_SOURCES
+  src/libol_test/main.cpp
+)
+add_executable(testLibOL ${TEST_SOURCES})
+target_link_libraries(testLibOL OL)
+
