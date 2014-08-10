@@ -12,6 +12,8 @@
 #define __blowfish__
 
 #include <vector>
+#include <cstdint>
+#include <cstring>
 
 class Blowfish {
 public:

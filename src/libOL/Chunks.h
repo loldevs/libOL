@@ -5,6 +5,7 @@
 #define __libol__Chunks__
 
 #include <vector>
+#include <cstdint>
 
 namespace libol {
     namespace Chunks {
