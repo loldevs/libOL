@@ -7,9 +7,9 @@
 #include <iostream>
 #include <vector>
 
-#include "ChunkHeader.h"
-#include "Header.h"
-#include "PayloadHeader.h"
+#include <libOL/ChunkHeader.h>
+#include <libOL/Header.h>
+#include <libOL/PayloadHeader.h>
 
 namespace libol {
     class File {
