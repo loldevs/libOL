@@ -9,7 +9,7 @@
 
 namespace libol {
     namespace Chunks {
-        static std::vector<uint8_t> decrypt(std::vector<uint8_t> bytes, std::vector<uint8_t> key);
+        std::vector<uint8_t> decryptAndDecompress(std::vector<uint8_t> bytes, std::vector<uint8_t> key);
     }
 }
 
