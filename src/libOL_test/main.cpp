@@ -14,17 +14,8 @@ int main(int argc, const char * argv[])
 
     libol::File file = libol::File::decode(ifs);
 
-    auto decryptionKey = file.payloadHeader.getDecodedEncryptionKey();
-
     auto header0 = file.chunkHeaders[0];
-    std::vector<uint8_t> chunk0;
-    chunk0.resize(header0.chunkLength);
-
-    file.seekToChunk(ifs, header0);
-    ifs.read(reinterpret_cast<char *>(&chunk0[0]), header0.chunkLength);
-
-    auto chunk0decrypted = libol::Chunks::decryptAndDecompress(chunk0, decryptionKey);
-    std::cout << "foo" << std::endl;
+    auto chunk = file.getDecryptedChunk(ifs, header0);
     return 0;
 }
 

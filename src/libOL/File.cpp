@@ -5,6 +5,8 @@
 
 #include <fstream>
 
+#include "Chunks.h"
+
 namespace libol {
     File File::decode(std::ifstream& ifs) {
         File file;
@@ -35,4 +37,17 @@ namespace libol {
                   payloadHeader.keyframeCount  * 17 +
                   chunkHeader.offset);
     }
+
+    std::vector<uint8_t> File::getDecryptedChunk(std::ifstream& ifs, ChunkHeader chunkHeader) {
+        std::vector<uint8_t> chunk;
+        chunk.resize(chunkHeader.chunkLength);
+
+        seekToChunk(ifs, chunkHeader);
+        ifs.read(reinterpret_cast<char *>(&chunk[0]), chunkHeader.chunkLength);
+
+        auto decryptionKey = payloadHeader.getDecodedEncryptionKey();
+        auto decrypted = libol::Chunks::decryptAndDecompress(chunk, decryptionKey);
+        return decrypted;
+    }
+
 }

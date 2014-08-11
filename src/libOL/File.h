@@ -22,6 +22,7 @@ namespace libol {
         std::vector<ChunkHeader> keyframeHeaders;
 
         void seekToChunk(std::ifstream& ifs, ChunkHeader chunkHeader);
+        std::vector<uint8_t> getDecryptedChunk(std::ifstream& ifs, ChunkHeader chunkHeader);
 
         static File decode(std::ifstream& ifs);
     };
