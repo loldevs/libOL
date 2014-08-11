@@ -5,15 +5,12 @@
 
 #include <zlib.h>
 
-#include "Blowfish/blowfish.h"
+#include "Blowfish/Blowfish.h"
 
 namespace libol {
     namespace Chunks {
         std::vector<uint8_t> decryptAndDecompress(std::vector<uint8_t> bytes, std::vector<uint8_t> key) {
-            auto blowfish = Blowfish{};
-            blowfish.SetKey(key);
-            std::vector<uint8_t> decrypted;
-            blowfish.Decrypt(&decrypted, bytes);
+            auto decrypted = Blowfish::decrypt(bytes, key);
 
             std::vector<uint8_t> decompressed;
             decompressed.resize(decrypted.size());

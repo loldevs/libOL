@@ -18,7 +18,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 ### libOL
 set(LIBOL_SOURCES
-  src/libOL/Blowfish/blowfish.cpp
+  src/libOL/Blowfish/Blowfish.cpp
   src/libOL/ChunkHeader.cpp
   src/libOL/File.cpp
   src/libOL/Header.cpp
@@ -39,6 +39,13 @@ if (ZLIB_FOUND)
   include_directories(${ZLIB_INCLUDE_DIRS})
   target_link_libraries(OL ${ZLIB_LIBRARIES})
 endif(ZLIB_FOUND)
+
+### OpenSSL
+find_package(OpenSSL REQUIRED)
+if (OPENSSL_FOUND)
+  include_directories(${OPENSSL_INCLUDE_DIRS})
+  target_link_libraries(OL ${OPENSSL_LIBRARIES})
+endif(OPENSSL_FOUND)
 
 ### Test libOL
 set(LIBOL_TEST_SOURCES

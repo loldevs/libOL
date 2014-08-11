@@ -5,8 +5,10 @@
 
 #include <cassert>
 #include <fstream>
+#include <iostream>
+#include <iomanip>
 
-#include "Blowfish/blowfish.h"
+#include "Blowfish/Blowfish.h"
 
 static inline std::vector<uint8_t> b64Decode(std::string const& input) {
     if (input.length() == 0) {
@@ -72,10 +74,8 @@ namespace libol {
         auto gameIdStr = std::to_string(gameId);
         auto gameIdVec = std::vector<uint8_t>{gameIdStr.begin(), gameIdStr.end()};
 
-        auto blowfish = Blowfish{};
-        blowfish.SetKey(gameIdVec);
-        std::vector<uint8_t> out;
-        blowfish.Decrypt(&out, encryptedKeyBytes);
+        std::vector<uint8_t> out = Blowfish::decrypt(encryptedKeyBytes, gameIdVec);
+
         return out;
     }
 
