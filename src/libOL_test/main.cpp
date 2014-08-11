@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include <libOL/File.h>
+#include <libOL/Chunks.h>
 
 int main(int argc, const char * argv[])
 {
@@ -13,7 +14,21 @@ int main(int argc, const char * argv[])
 
     libol::File file = libol::File::decode(ifs);
 
-    //std::cout << file << std::endl;
+    auto decryptionKey = file.payloadHeader.getDecodedEncryptionKey();
+
+    auto header0 = file.chunkHeaders[0];
+    std::vector<uint8_t> chunk0;
+    chunk0.resize(header0.chunkLength);
+
+    ifs.seekg(file.header.payloadOffset +
+              file.payloadHeader.chunkCount * 17 +
+              file.payloadHeader.keyframeCount  * 17 +
+              header0.offset);
+    ifs.read(reinterpret_cast<char *>(&chunk0[0]), header0.chunkLength);
+
+    auto chunk0decrypted = libol::Chunks::decryptAndDecompress(chunk0, decryptionKey);
+    std::cout << "foo" << std::endl;
     return 0;
 }
+
 
