@@ -28,4 +28,11 @@ namespace libol {
 
         return file;
     }
+
+    void File::seekToChunk(std::ifstream& ifs, ChunkHeader chunkHeader) {
+        ifs.seekg(header.payloadOffset +
+                  payloadHeader.chunkCount * 17 +
+                  payloadHeader.keyframeCount  * 17 +
+                  chunkHeader.offset);
+    }
 }
