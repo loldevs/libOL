@@ -4,6 +4,7 @@
 #ifndef __libol__File__
 #define __libol__File__
 
+#include <cstdint>
 #include <iostream>
 #include <vector>
 

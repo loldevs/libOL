@@ -4,6 +4,7 @@
 #ifndef __libol__PayloadHeader__
 #define __libol__PayloadHeader__
 
+#include <cstdint>
 #include <iostream>
 #include <vector>
 

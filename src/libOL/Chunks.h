@@ -4,8 +4,8 @@
 #ifndef __libol__Chunks__
 #define __libol__Chunks__
 
-#include <vector>
 #include <cstdint>
+#include <vector>
 
 namespace libol {
     namespace Chunks {
