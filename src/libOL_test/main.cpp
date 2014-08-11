@@ -4,18 +4,18 @@
 #include <iostream>
 #include <fstream>
 
-#include <libOL/File.h>
 #include <libOL/Chunks.h>
+#include <libOL/Rofl.h>
 
 int main(int argc, const char * argv[])
 {
 
     std::ifstream ifs("/Users/toulouse/code/lol/lmao/rofl/22923174.rofl", std::ios::binary);
 
-    libol::File file = libol::File::decode(ifs);
+    libol::Rofl rofl = libol::Rofl::decode(ifs);
 
-    auto header0 = file.chunkHeaders[0];
-    auto chunk = file.getDecryptedChunk(ifs, header0);
+    auto header0 = rofl.chunkHeaders[0];
+    auto chunk = rofl.getDecryptedChunk(ifs, header0);
     return 0;
 }
 

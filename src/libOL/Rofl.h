@@ -13,7 +13,7 @@
 #include <libOL/PayloadHeader.h>
 
 namespace libol {
-    class File {
+    class Rofl {
     public:
         Header header;
         std::string metadata;
@@ -24,7 +24,7 @@ namespace libol {
         void seekToChunk(std::ifstream& ifs, ChunkHeader chunkHeader);
         std::vector<uint8_t> getDecryptedChunk(std::ifstream& ifs, ChunkHeader chunkHeader);
 
-        static File decode(std::ifstream& ifs);
+        static Rofl decode(std::ifstream& ifs);
     };
 }
 

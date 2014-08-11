@@ -20,10 +20,10 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 set(LIBOL_SOURCES
   src/libOL/Blowfish/Blowfish.cpp
   src/libOL/ChunkHeader.cpp
-  src/libOL/File.cpp
+  src/libOL/Chunks.cpp
   src/libOL/Header.cpp
   src/libOL/PayloadHeader.cpp
-  src/libOL/Chunks.cpp
+  src/libOL/Rofl.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")

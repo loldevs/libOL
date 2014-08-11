@@ -1,15 +1,15 @@
 // Copyright (c) 2014 Andrew Toulouse.
 // Distributed under the MIT License.
 
-#include "File.h"
+#include "Rofl.h"
 
 #include <fstream>
 
 #include "Chunks.h"
 
 namespace libol {
-    File File::decode(std::ifstream& ifs) {
-        File file;
+    Rofl Rofl::decode(std::ifstream& ifs) {
+        Rofl file;
 
         // Header
         file.header = Header::decode(ifs);
@@ -31,14 +31,14 @@ namespace libol {
         return file;
     }
 
-    void File::seekToChunk(std::ifstream& ifs, ChunkHeader chunkHeader) {
+    void Rofl::seekToChunk(std::ifstream& ifs, ChunkHeader chunkHeader) {
         ifs.seekg(header.payloadOffset +
                   payloadHeader.chunkCount * 17 +
                   payloadHeader.keyframeCount  * 17 +
                   chunkHeader.offset);
     }
 
-    std::vector<uint8_t> File::getDecryptedChunk(std::ifstream& ifs, ChunkHeader chunkHeader) {
+    std::vector<uint8_t> Rofl::getDecryptedChunk(std::ifstream& ifs, ChunkHeader chunkHeader) {
         std::vector<uint8_t> chunk;
         chunk.resize(chunkHeader.chunkLength);
 
