@@ -31,12 +31,12 @@ namespace libol {
             while (!done) {
                 // If total_out has reached decompressed's capacity, make room for more
                 if (stream.total_out >= decompressed.capacity()) {
-                    // Resize to an additional 50% of the decrypted bytes' size
-                    decompressed.resize(decrypted.size() / 2);
+                    // Resize output to 150% of previous size
+                    decompressed.resize(decompressed.capacity() + (decompressed.capacity() << 1));
                 }
 
-                stream.next_out = (Bytef *)(decrypted.data() + stream.total_out);
-                stream.avail_out = decrypted.size() - stream.total_out;
+                stream.next_out = (Bytef *)(&decompressed[0] + stream.total_out);
+                stream.avail_out = decompressed.capacity() - stream.total_out;
                 int err = inflate(&stream, Z_SYNC_FLUSH);
                 if (err == Z_STREAM_END) {
                     done = true;
@@ -51,6 +51,7 @@ namespace libol {
                 return std::vector<uint8_t> {};
             }  
 
+            decompressed.resize(stream.total_out);
             return decompressed;
         }
     }
