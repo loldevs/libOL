@@ -16,13 +16,13 @@ void test_keyframe()
     libol::Keyframe frame = libol::Keyframe::decode(ifs);
 
     for(auto& player : frame.players) {
-    	std::cout << player.summonerName << " as " << player.championName << std::endl;
+        std::cout << player.summonerName << " as " << player.championName << std::endl;
     }
 }
 
 
 void test_rofl() {
-	std::ifstream ifs("/Users/toulouse/code/lol/lmao/rofl/22923174.rofl", std::ios::binary);
+    std::ifstream ifs("/Users/toulouse/code/lol/lmao/rofl/22923174.rofl", std::ios::binary);
 
     libol::Rofl rofl = libol::Rofl::decode(ifs);
 
@@ -32,7 +32,7 @@ void test_rofl() {
 
 int main(int argc, const char * argv[])
 {
-	test_keyframe();
+    test_keyframe();
     return 0;
 }
 
