@@ -17,7 +17,8 @@ namespace libol {
         std::array<uint8_t, 0x2C> unk0;
         std::array<uint32_t, 30> runes;
         std::array<uint8_t, 0x194> masteries;
-        std::array<uint8_t, 0x77> items;
+        std::array<uint8_t, 0x09> itemsHeader;
+        std::array<uint8_t, 9/* items (10 in wiki) */ * (0x07 + 0x04)> items;
         /* playerData header */
         std::array<uint8_t, 0x130> playerData;
         /* abilities */

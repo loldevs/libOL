@@ -43,15 +43,18 @@ namespace libol {
 
         // Masteries
         ifs.read(reinterpret_cast<char *>(player.masteries.data()), player.masteries.size());
+        ifs.ignore(4); // Padding
 
         // Items
+        ifs.read(reinterpret_cast<char *>(player.itemsHeader.data()), player.itemsHeader.size());
         ifs.read(reinterpret_cast<char *>(player.items.data()), player.items.size());
 
         // Playerdata
         ifs.ignore(0x0C /* or 0x0F ? */); // Ignore playerData header
         ifs.read(reinterpret_cast<char *>(player.playerData.data()), player.playerData.size());
 
-        /*
+        while(ifs.peek() == 0x00) ifs.ignore(1); // Jump over some nulls (not in wiki)
+
         // Abilities
         ifs.ignore(0x04); // Ignore abilities header
         int abilities = 3;
@@ -69,7 +72,7 @@ namespace libol {
                 exit(1);
             }
         }
-        ifs.ignore(3); // Ignore last ability*/
+        ifs.ignore(3); // Ignore last ability
 
         // Footer
         uint8_t marker[] = {0x00, 0x00, 0x15, 0x01}; // Search for this
