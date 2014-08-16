@@ -29,6 +29,7 @@ set(LIBOL_SOURCES
   src/libOL/PlayerSegment.cpp
   src/libOL/MasteryEntry.cpp
   src/libOL/ItemEntry.cpp
+  src/libOL/AbilityEntry.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")

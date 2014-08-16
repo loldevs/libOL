@@ -71,22 +71,9 @@ namespace libol {
 
         // Abilities
         ifs.ignore(0x04); // Ignore abilities header
-        int abilities = 3;
-        while(--abilities) {
-            ifs.ignore(0x04);
-            uint8_t first = ifs.peek();
-            if(first == 0xF3)
-                ifs.ignore(3);
-            else if(first == 0x73)
-                ifs.ignore(6);
-            else if(first == 0x33)
-                ifs.ignore(6);
-            else {
-                std::cout << "unkown ability format @ " << std::hex << ifs.tellg() << std::endl;
-                exit(1);
-            }
+        for(int i = 0; i < player.abilities.size(); i++) {
+            player.abilities[i] = AbilityEntry::decode(ifs);
         }
-        ifs.ignore(3); // Ignore last ability
 
         // Footer
         uint8_t marker[] = {0x00, 0x00, 0x15, 0x01}; // Search for this

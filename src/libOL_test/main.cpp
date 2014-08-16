@@ -48,6 +48,11 @@ int test_keyframe(std::vector<std::string> arguments)
             std::cout << (unsigned) item.quantity << " * " << item.itemId << " with "
                 << (unsigned) item.charges << " charges and " << item.cooldown << " cooldown" << std::endl;
         }
+
+        std::cout << "Abilities: " << std::endl;
+        for(auto& ability : player.abilities) {
+            std::cout << (unsigned) ability.abilityId << ": Level " << (unsigned) ability.level << std::endl;
+        }
     }
 
     return 0;
