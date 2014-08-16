@@ -32,7 +32,7 @@ namespace libol {
         // Champion name
         char championChars[0x11];
         ifs.read(championChars, 0x10);
-        summonerChars[0x11] = 0x00;
+        summonerChars[0x10] = 0x00;
         player.championName = championChars;
 
         // Unknown 0
@@ -42,18 +42,32 @@ namespace libol {
         ifs.read(reinterpret_cast<char *>(player.runes.data()), player.runes.size() * 4);
 
         // Masteries
-        ifs.read(reinterpret_cast<char *>(player.masteries.data()), player.masteries.size());
+        ifs.read(reinterpret_cast<char *>(player.masteriesHeader.data()), player.masteriesHeader.size());
+        auto pos = ifs.tellg();
+        int masteryCount = 0;
+        while(MasteryEntry::probe(ifs) && masteryCount < 79) {
+            player.masteries.push_back(MasteryEntry::decode(ifs));
+            masteryCount++;
+        }
+        ifs.seekg(pos);
+        ifs.ignore(0x18C);
         ifs.ignore(4); // Padding
 
         // Items
         ifs.read(reinterpret_cast<char *>(player.itemsHeader.data()), player.itemsHeader.size());
-        ifs.read(reinterpret_cast<char *>(player.items.data()), player.items.size());
+        for(int i = 0; i < player.items.size(); i++) {
+            player.items[i] = ItemEntry::decode(ifs);
+        }
+
+        for(int i = 0; i < player.items.size(); i++) {
+            player.items[i].decodeCooldown(ifs);
+        }
 
         // Playerdata
         ifs.ignore(0x0C /* or 0x0F ? */); // Ignore playerData header
         ifs.read(reinterpret_cast<char *>(player.playerData.data()), player.playerData.size());
 
-        while(ifs.peek() == 0x00) ifs.ignore(1); // Jump over some nulls (not in wiki)
+        while(ifs.peek() == 0x00 || ifs.peek() == 0x01) ifs.ignore(1); // Jump over some nulls (not in wiki)
 
         // Abilities
         ifs.ignore(0x04); // Ignore abilities header

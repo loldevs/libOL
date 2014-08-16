@@ -21,13 +21,33 @@ int test_keyframe(std::vector<std::string> arguments)
     std::ifstream ifs(arguments.at(0), std::ios::binary);
     if (!ifs) {
         std::cerr << "Failed to open " << arguments.at(0) << ": " << strerror(errno) << std::endl;
-	return 2;
+        return 2;
     }
 
     libol::Keyframe frame = libol::Keyframe::decode(ifs);
 
+    std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
+
     for(auto& player : frame.players) {
         std::cout << player.summonerName << " as " << player.championName << std::endl;
+
+        std::cout << "Runes: ";
+        for(auto& rune : player.runes) {
+            std::cout << rune << " ";
+        }
+        std::cout << std::endl;
+
+        int count = 0;
+        for(auto& mastery : player.masteries) {
+            count += mastery.pointsSpent;
+        }
+        std::cout << count << " mastery points spent" << std::endl;
+
+        std::cout << "Items: " << std::endl;
+        for(auto& item : player.items) {
+            std::cout << (unsigned) item.quantity << " * " << item.itemId << " with "
+                << (unsigned) item.charges << " charges and " << item.cooldown << " cooldown" << std::endl;
+        }
     }
 
     return 0;
