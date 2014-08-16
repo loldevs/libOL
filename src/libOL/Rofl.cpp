@@ -33,8 +33,8 @@ namespace libol {
 
     void Rofl::seekToChunk(std::ifstream& ifs, ChunkHeader chunkHeader) {
         ifs.seekg(header.payloadOffset +
-                  payloadHeader.chunkCount * 17 +
-                  payloadHeader.keyframeCount  * 17 +
+                  payloadHeader.chunkCount * ROFL_CHUNK_HEADER_LENGTH +
+                  payloadHeader.keyframeCount  * ROFL_KEYFRAME_HEADER_LENGTH +
                   chunkHeader.offset);
     }
 

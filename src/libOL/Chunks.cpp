@@ -3,7 +3,9 @@
 
 #include "Chunks.h"
 
+extern "C" {
 #include <zlib.h>
+}
 
 #include "Blowfish/Blowfish.h"
 

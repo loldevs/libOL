@@ -12,6 +12,9 @@
 #include <libOL/Header.h>
 #include <libOL/PayloadHeader.h>
 
+#define ROFL_CHUNK_HEADER_LENGTH 17
+#define ROFL_KEYFRAME_HEADER_LENGTH 17
+
 namespace libol {
     class Rofl {
     public:
