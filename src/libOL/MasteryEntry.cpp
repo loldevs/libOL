@@ -22,8 +22,10 @@ namespace libol {
 
         entry.id = ifs.get();
         entry.tree = ifs.get();
-        assert(ifs.get() == 0x03);
-        assert(ifs.get() == 0x00);
+        uint8_t byte = ifs.get();
+        assert(byte == 0x03);
+        byte = ifs.get();
+        assert(byte == 0x00);
         ifs.read(reinterpret_cast<char *>(&entry.pointsSpent), sizeof(entry.pointsSpent));
 
         return entry;

@@ -12,8 +12,10 @@ namespace libol {
         ItemEntry entry;
 
         ifs.read(reinterpret_cast<char *>(&entry.itemId), sizeof(entry.itemId));
-        assert(ifs.get() == 0x00);
-        assert(ifs.get() == 0x00);
+        uint8_t byte = ifs.get();
+        assert(byte == 0x00);
+        byte = ifs.get();
+        assert(byte == 0x00);
         entry.slotId = ifs.get();
         entry.quantity = ifs.get();
         entry.charges = ifs.get();
