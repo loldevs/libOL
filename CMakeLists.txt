@@ -27,6 +27,8 @@ set(LIBOL_SOURCES
   src/libOL/Keyframe.cpp
   src/libOL/KeyframeHeader.cpp
   src/libOL/PlayerSegment.cpp
+  src/libOL/MasteryEntry.cpp
+  src/libOL/ItemEntry.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")
