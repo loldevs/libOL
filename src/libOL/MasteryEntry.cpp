@@ -4,7 +4,7 @@
 #include "MasteryEntry.h"
 
 #include <fstream>
-#include <assert.h>
+#include <cassert>
 #include <cstring>
 
 namespace libol {
