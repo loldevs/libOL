@@ -55,11 +55,11 @@ namespace libol {
 
         // Items
         ifs.read(reinterpret_cast<char *>(player.itemsHeader.data()), player.itemsHeader.size());
-        for(int i = 0; i < player.items.size(); i++) {
+        for(uint8_t i = 0; i < player.items.size(); i++) {
             player.items[i] = ItemEntry::decode(ifs);
         }
 
-        for(int i = 0; i < player.items.size(); i++) {
+        for(uint8_t i = 0; i < player.items.size(); i++) {
             player.items[i].decodeCooldown(ifs);
         }
 
