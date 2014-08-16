@@ -52,6 +52,10 @@ if (OPENSSL_FOUND)
   target_link_libraries(OL ${OPENSSL_LIBRARIES})
 endif(OPENSSL_FOUND)
 
+### Google Logging (Glog)
+#find_package(Glog REQUIRED)
+target_link_libraries(OL "glog")
+
 ### Test libOL
 set(LIBOL_TEST_SOURCES
   src/libOL_test/main.cpp

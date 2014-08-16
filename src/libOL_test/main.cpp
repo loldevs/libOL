@@ -8,6 +8,8 @@
 #include <cassert>
 #include <cstring>
 
+#include <glog/logging.h>
+
 #include <libOL/Chunks.h>
 #include <libOL/Rofl.h>
 #include <libOL/Keyframe.h>
@@ -79,6 +81,8 @@ int usage(std::string prog_name) {
 
 int main(int argc, const char * argv[])
 {
+    google::InitGoogleLogging(argv[0]);
+
     std::string executable_name = std::string(argv[0], 0, MAX_ARGUMENT_LENGTH);
     if (argc < 3) {
         return usage(executable_name);

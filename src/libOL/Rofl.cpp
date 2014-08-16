@@ -4,6 +4,7 @@
 #include "Rofl.h"
 
 #include <fstream>
+#include <glog/logging.h>
 
 #include "Chunks.h"
 
@@ -12,21 +13,29 @@ namespace libol {
         Rofl file;
 
         // Header
+	DLOG(INFO) << "Decoding ROFL header";
         file.header = Header::decode(ifs);
 
         // Metadata
+	DLOG(INFO) << "Reading metadata @ " << file.header.metadataOffset << " len " << file.header.metadataLength;
         ifs.seekg(file.header.metadataOffset);
         file.metadata.resize(file.header.metadataLength);
         ifs.read(reinterpret_cast<char *>(&file.metadata[0]), file.header.metadataLength);
 
         // Payload Header
+	DLOG(INFO) << "Reading payload header @ " << file.header.payloadHeaderOffset; 
         ifs.seekg(file.header.payloadHeaderOffset);
         file.payloadHeader = PayloadHeader::decode(ifs);
 
         // Chunk and Keyframe headers
+	DLOG(INFO) << "Reading chunk/keyframe headers @ " << (file.header.payloadHeaderOffset + file.header.payloadHeaderLength);
         ifs.seekg(file.header.payloadHeaderOffset + file.header.payloadHeaderLength);
+	DLOG(INFO) << "Reading " << file.payloadHeader.chunkCount << " chunk headers";
         file.chunkHeaders = ChunkHeader::decodeMultiple(ifs, file.payloadHeader.chunkCount);
+	DLOG(INFO) << "Reading " << file.payloadHeader.keyframeCount << " keyframe headers";
         file.keyframeHeaders = ChunkHeader::decodeMultiple(ifs, file.payloadHeader.keyframeCount);
+
+	DLOG(INFO) << "Done decoding ROFL";
 
         return file;
     }
