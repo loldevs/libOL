@@ -50,8 +50,8 @@ namespace libol {
             masteryCount++;
         }
         ifs.seekg(pos);
-        ifs.ignore(0x18C);
-        ifs.ignore(4); // Padding
+        ifs.ignore(0x18C); // Jump over entire section
+        while(!ifs.peek()) ifs.ignore(1); // Padding
 
         // Items
         ifs.read(reinterpret_cast<char *>(player.itemsHeader.data()), player.itemsHeader.size());
@@ -66,8 +66,10 @@ namespace libol {
         // Playerdata
         ifs.ignore(0x0C /* or 0x0F ? */); // Ignore playerData header
         ifs.read(reinterpret_cast<char *>(player.playerData.data()), player.playerData.size());
-
-        while(ifs.peek() == 0x00 || ifs.peek() == 0x01) ifs.ignore(1); // Jump over some nulls (not in wiki)
+        ifs.ignore(0x1c); // Probably more playerData
+        // Sometimes 0xE data follows:
+        while(ifs.peek() < 0x70) // TODO: Detect this better
+            ifs.ignore(1);
 
         // Abilities
         ifs.ignore(0x04); // Ignore abilities header

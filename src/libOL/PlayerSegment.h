@@ -28,7 +28,7 @@ namespace libol {
         /* playerData header */
         std::array<uint8_t, 0x130> playerData;
         /* abilities header */
-        std::array<AbilityEntry, 4> abilities; 
+        std::array<AbilityEntry, 4> abilities;
         /* unknown string data */
         /* unknown data */
         std::array<uint8_t, 0x09> footer;
