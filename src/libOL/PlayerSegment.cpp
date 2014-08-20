@@ -58,21 +58,18 @@ namespace libol {
         for(int i = 0; i < player.items.size(); i++) {
             player.items[i] = ItemEntry::decode(ifs);
         }
-
         for(int i = 0; i < player.items.size(); i++) {
             player.items[i].decodeCooldown(ifs);
         }
-
         for(int i = 0; i < player.items.size(); i++) {
             player.items[i].decodeBaseCooldown(ifs);
         }
+        if(ifs.peek() == 0xF3) // Item replacements
+            ifs.ignore(0xE);
 
         // Playerdata
         ifs.ignore(0x0C /* or 0x0F ? */); // Ignore playerData header
         ifs.read(reinterpret_cast<char *>(&player.playerData), sizeof(player.playerData));
-        // Sometimes 0xE data follows:
-        while(ifs.peek() < 0x70) // TODO: Detect this better
-            ifs.ignore(1);
 
         // Abilities
         ifs.ignore(0x04); // Ignore abilities header
