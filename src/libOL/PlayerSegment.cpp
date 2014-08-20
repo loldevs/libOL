@@ -63,10 +63,13 @@ namespace libol {
             player.items[i].decodeCooldown(ifs);
         }
 
+        for(int i = 0; i < player.items.size(); i++) {
+            player.items[i].decodeBaseCooldown(ifs);
+        }
+
         // Playerdata
         ifs.ignore(0x0C /* or 0x0F ? */); // Ignore playerData header
         ifs.read(reinterpret_cast<char *>(player.playerData.data()), player.playerData.size());
-        ifs.ignore(0x1c); // Probably more playerData
         // Sometimes 0xE data follows:
         while(ifs.peek() < 0x70) // TODO: Detect this better
             ifs.ignore(1);

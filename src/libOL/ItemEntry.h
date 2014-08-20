@@ -20,6 +20,9 @@ namespace libol {
 
         float cooldown;
         void decodeCooldown(std::ifstream& ifs);
+
+        float baseCooldown;
+        void decodeBaseCooldown(std::ifstream& ifs);
     };
 }
 

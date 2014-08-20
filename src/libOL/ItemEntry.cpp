@@ -26,4 +26,8 @@ namespace libol {
     void ItemEntry::decodeCooldown(std::ifstream& ifs) {
         ifs.read(reinterpret_cast<char *>(&this->cooldown), sizeof(this->cooldown));
     }
+
+    void ItemEntry::decodeBaseCooldown(std::ifstream& ifs) {
+        ifs.read(reinterpret_cast<char *>(&this->baseCooldown), sizeof(this->baseCooldown));
+    }
 }
