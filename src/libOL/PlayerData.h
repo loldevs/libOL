@@ -7,11 +7,13 @@
 #include <cstdint>
 #include <iostream>
 
+#pragma pack(1)
+
 namespace libol {
     struct PlayerData {
-        uint32_t kills;
-        uint32_t unk0;
         uint32_t assists;
+        uint32_t unk0;
+        uint32_t kills;
         uint32_t unk1;
         uint32_t doubleKills;
         uint32_t unk2;
@@ -62,6 +64,8 @@ namespace libol {
         uint32_t unk25;
         uint32_t teamId;
         float unk26;
+        uint32_t unk27;
+        float unk28;
         float totalDamageDealt;
         float totalDamageDealtToChamptions;
         float totalDamageTaken;
@@ -75,11 +79,11 @@ namespace libol {
         float trueDamageTaken;
         uint32_t turretsDestroyed;
         uint32_t inhibitorsDestroyed;
-        uint32_t unk27;
+        uint32_t unk29;
         uint32_t wardsDestroyed;
         uint32_t wardsPlaced;
-        uint32_t unk28;
-        uint32_t unk29;
+        uint32_t unk30;
+        uint32_t unk31;
         uint16_t padding1;
     };
 }
