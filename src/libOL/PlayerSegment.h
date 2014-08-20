@@ -11,6 +11,7 @@
 
 #include <libOL/MasteryEntry.h>
 #include <libOL/ItemEntry.h>
+#include <libOL/PlayerData.h>
 #include <libOL/AbilityEntry.h>
 
 namespace libol {
@@ -26,7 +27,7 @@ namespace libol {
         std::array<uint8_t, 0x09> itemsHeader;
         std::array<ItemEntry, 10> items;
         /* playerData header */
-        std::array<uint8_t, 0x130 - 0xC> playerData;
+        PlayerData playerData;
         /* abilities header */
         std::array<AbilityEntry, 4> abilities;
         /* unknown string data */

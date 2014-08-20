@@ -69,7 +69,7 @@ namespace libol {
 
         // Playerdata
         ifs.ignore(0x0C /* or 0x0F ? */); // Ignore playerData header
-        ifs.read(reinterpret_cast<char *>(player.playerData.data()), player.playerData.size());
+        ifs.read(reinterpret_cast<char *>(&player.playerData), sizeof(player.playerData));
         // Sometimes 0xE data follows:
         while(ifs.peek() < 0x70) // TODO: Detect this better
             ifs.ignore(1);
