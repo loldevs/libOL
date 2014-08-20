@@ -55,13 +55,13 @@ namespace libol {
 
         // Items
         ifs.read(reinterpret_cast<char *>(player.itemsHeader.data()), player.itemsHeader.size());
-        for(int i = 0; i < player.items.size(); i++) {
+        for(uint8_t i = 0; i < player.items.size(); i++) {
             player.items[i] = ItemEntry::decode(ifs);
         }
-        for(int i = 0; i < player.items.size(); i++) {
+        for(uint8_t i = 0; i < player.items.size(); i++) {
             player.items[i].decodeCooldown(ifs);
         }
-        for(int i = 0; i < player.items.size(); i++) {
+        for(uint8_t i = 0; i < player.items.size(); i++) {
             player.items[i].decodeBaseCooldown(ifs);
         }
         if(ifs.peek() == 0xF3) // Item replacements
@@ -73,7 +73,7 @@ namespace libol {
 
         // Abilities
         ifs.ignore(0x04); // Ignore abilities header
-        for(int i = 0; i < player.abilities.size(); i++) {
+        for(uint8_t i = 0; i < player.abilities.size(); i++) {
             player.abilities[i] = AbilityEntry::decode(ifs);
         }
 
