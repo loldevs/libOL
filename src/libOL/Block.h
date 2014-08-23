@@ -18,7 +18,7 @@ namespace libol {
             uint8_t diff;
         };
 
-        struct BlockData { /* Maybe name this BlockParam */
+        struct BlockParam {
             bool is32;
             uint8_t value8;
             uint32_t value32;
@@ -30,7 +30,7 @@ namespace libol {
         uint32_t size;
         bool hasExplicitType;
         uint8_t type;
-        BlockData data;
+        BlockParam param;
 
         std::vector<uint8_t> content;
 

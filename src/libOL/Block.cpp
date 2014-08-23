@@ -30,7 +30,7 @@ namespace libol {
             || !get_bit(marker, 6)
             || !get_bit(marker, 7)
         ) {
-            std::cout << "unexpected marker bit @ " << std::hex << ifs.tellg() << std::endl;
+            //std::cout << "unexpected marker bit @ " << std::hex << ifs.tellg() << std::endl;
             //exit(0);
         }
 
@@ -63,11 +63,11 @@ namespace libol {
         }
 
         // Bit 3: Blockdata size
-        block.data.is32 = !get_bit(marker, 2);
-        if(block.data.is32) {
-            ifs.read(reinterpret_cast<char*>(&block.data.value32), sizeof(block.data.value32));
+        block.param.is32 = !get_bit(marker, 2);
+        if(block.param.is32) {
+            ifs.read(reinterpret_cast<char*>(&block.param.value32), sizeof(block.param.value32));
         } else {
-            block.data.value8 = ifs.get();
+            block.param.value8 = ifs.get();
         }
 
         // Read content
