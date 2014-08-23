@@ -5,6 +5,7 @@
 #define __libol__Block__
 
 #include <cstdint>
+#include <cassert>
 #include <iostream>
 #include <vector>
 
@@ -32,6 +33,45 @@ namespace libol {
         BlockData data;
 
         std::vector<uint8_t> content;
+
+        template<class T>
+        void read(T* dest, size_t offset) {
+            assert(offset + sizeof(T) <= this->size);
+            memcpy(dest, this->content.data() + offset, sizeof(T));
+        }
+        template<class T>
+        void read(T* dest, size_t offset, size_t count) {
+            size_t length = count * sizeof(T);
+            assert(offset + length <= this->size);
+            memcpy(dest, this->content.data() + offset, length);
+        }
+
+        class Stream {
+            Block& block;
+            size_t pos;
+        public:
+            Stream(Block& block, size_t pos = 0) :
+                block(block),
+                pos(pos)
+            {} 
+
+            size_t tellg() { return pos; }
+            void seekg(size_t offset) { pos = offset; }
+            void ignore(size_t bytes) { pos += bytes; }
+
+            template<class T>
+            void read(T* dest) {
+                this->block.read(dest, pos);
+                pos += sizeof(T);
+            }
+            template<class T>
+            void read(T* dest, size_t count){
+                this->block.read(dest, pos, count);
+                pos += sizeof(T) * count;
+            }
+        };
+
+        Stream createStream(size_t offset = 0);
 
         static Block decode(std::ifstream& ifs, Block* previous);
     };

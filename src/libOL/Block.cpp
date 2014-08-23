@@ -12,6 +12,11 @@ namespace libol {
         return (byte >> (7 - n)) & 1;
     }
 
+    Block::Stream Block::createStream(size_t offset) {
+        Stream stream(*this, offset);
+        return stream;
+    }
+
     Block Block::decode(std::ifstream& ifs, Block* previous) {
         Block block;
 
@@ -22,9 +27,12 @@ namespace libol {
         if(
             get_bit(marker, 4)
             || get_bit(marker, 5)
-            || !get_bit(marker, 6)
+            || !get_bit(marker, 6)
             || !get_bit(marker, 7)
-        ) std::cout << "unexpected marker bit" << std::endl;
+        ) {
+            std::cout << "unexpected marker bit @ " << std::hex << ifs.tellg() << std::endl;
+            //exit(0);
+        }
 
         // Bit 1: Time format
         block.time.isAbsolute = get_bit(marker, 0);
@@ -47,7 +55,7 @@ namespace libol {
             block.type = ifs.get();
         } else {
             if(block.headBlock != nullptr) {
-                block.type = block.headBlock.type;
+                block.type = block.headBlock->type;
             } else {
                 std::cout << "no headBlock on typeless block" << std::endl;
                 exit(1);
