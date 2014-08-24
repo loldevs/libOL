@@ -24,21 +24,36 @@ int test_keyframe(std::vector<std::string> arguments)
         return 2;
     }
 
-    libol::Keyframe frame = libol::Keyframe::decode(ifs);
+    std::vector<libol::Block> blocks;
+    libol::Block prev;
+    bool first = true;
+    while(true) {
+        libol::Block block = libol::Block::decode(ifs, first ? nullptr : &prev);
+        first = false;
+        prev = block;
+        ifs.peek(); // provoke eof
+        if(!ifs.eof())
+            blocks.push_back(block);
+        else
+            break;
+    }
 
-    std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
+    auto frame = libol::Keyframe::decode(blocks);
+
+    //std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
 
     for(auto& player : frame.players) {
-        std::cout << player.summonerName << " as " << player.championName << std::endl;
+        std::cout << player.summoner.name << "[" << (unsigned) player.summoner.level << "] as " << player.champion << std::endl;
+        std::cout << player.stats.kills << "/" << player.stats.deaths << "/" << player.stats.assists << std::endl;
 
         std::cout << "Runes: ";
-        for(auto& rune : player.runes) {
+        for(auto& rune : player.summoner.runes) {
             std::cout << rune << " ";
         }
         std::cout << std::endl;
 
         int count = 0;
-        for(auto& mastery : player.masteries) {
+        for(auto& mastery : player.summoner.masteries) {
             count += mastery.pointsSpent;
         }
         std::cout << count << " mastery points spent" << std::endl;
