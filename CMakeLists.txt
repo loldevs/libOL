@@ -25,11 +25,13 @@ set(LIBOL_SOURCES
   src/libOL/PayloadHeader.cpp
   src/libOL/Rofl.cpp
   src/libOL/Keyframe.cpp
-  src/libOL/KeyframeHeader.cpp
-  src/libOL/PlayerSegment.cpp
-  src/libOL/MasteryEntry.cpp
-  src/libOL/ItemEntry.cpp
-  src/libOL/AbilityEntry.cpp
+  src/libOL/Blocks/Block.cpp
+  src/libOL/Blocks/KeyframeHeader.cpp
+  src/libOL/Blocks/PlayerHeader.cpp
+  src/libOL/Blocks/SummonerData.cpp
+  src/libOL/Blocks/Inventory.cpp
+  src/libOL/Blocks/PlayerStats.cpp
+  src/libOL/Blocks/Ability.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")

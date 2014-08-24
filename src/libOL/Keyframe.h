@@ -4,22 +4,20 @@
 #ifndef __libol__Keyframe__
 #define __libol__Keyframe__
 
-#include <cstdint>
-#include <iostream>
-#include <vector>
+#include "Blocks/Block.h"
+#include "Blocks/KeyframeHeader.h"
+#include "Player.h"
 
-#include <libOL/KeyframeHeader.h>
-#include <libOL/PlayerSegment.h>
+#include <cstdint>
+#include <vector>
 
 namespace libol {
     class Keyframe {
     public:
         KeyframeHeader header;
-        std::vector<PlayerSegment> players;
-        /* Turret segments */
-        /* unknown data */
+        std::vector<Player> players;
 
-        static Keyframe decode(std::ifstream& ifs);
+        static Keyframe decode(std::vector<Block>& blocks);
     };
 }
 
