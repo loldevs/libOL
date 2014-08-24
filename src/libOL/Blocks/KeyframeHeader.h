@@ -4,18 +4,15 @@
 #ifndef __libol__KeyframeHeader__
 #define __libol__KeyframeHeader__
 
+#include "Block.h"
+
 #include <cstdint>
-#include <iostream>
 #include <array>
 
 namespace libol {
     class KeyframeHeader {
     public:
-        uint8_t start; /* 03 */
-        float timestamp; // In seconds
-        std::array<uint8_t, 11> unk0;
-        
-        static KeyframeHeader decode(std::ifstream& ifs);
+        static KeyframeHeader decode(Block& block);
     };
 }
 

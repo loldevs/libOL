@@ -20,19 +20,7 @@ namespace libol {
     Block Block::decode(std::ifstream& ifs, Block* previous) {
         Block block;
 
-        block.headBlock = previous; // TODO: seek explicitly typed block
-
         uint8_t marker = ifs.get();
-
-        if(
-            get_bit(marker, 4)
-            || get_bit(marker, 5)
-            || !get_bit(marker, 6)
-            || !get_bit(marker, 7)
-        ) {
-            //std::cout << "unexpected marker bit @ " << std::hex << ifs.tellg() << std::endl;
-            //exit(0);
-        }
 
         // Bit 1: Time format
         block.time.isAbsolute = get_bit(marker, 0);
@@ -54,10 +42,10 @@ namespace libol {
         if(block.hasExplicitType) {
             block.type = ifs.get();
         } else {
-            if(block.headBlock != nullptr) {
-                block.type = block.headBlock->type;
+            if(previous != nullptr) {
+                block.type = previous->type;
             } else {
-                std::cout << "no headBlock on typeless block" << std::endl;
+                std::cout << "typeless block as first block" << std::endl;
                 exit(1);
             }
         }

@@ -24,8 +24,6 @@ namespace libol {
             uint32_t value32;
         };
 
-        Block* headBlock;
-
         BlockTime time;
         uint32_t size;
         bool hasExplicitType;
@@ -58,6 +56,7 @@ namespace libol {
             size_t tellg() { return pos; }
             void seekg(size_t offset) { pos = offset; }
             void ignore(size_t bytes) { pos += bytes; }
+            uint8_t get() { uint8_t data; read(&data); return data; }
 
             template<class T>
             void read(T* dest) {
