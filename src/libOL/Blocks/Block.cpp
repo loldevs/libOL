@@ -23,11 +23,11 @@ namespace libol {
         uint8_t marker = ifs.get();
 
         // Bit 1: Time format
-        block.time.isAbsolute = get_bit(marker, 0);
+        block.time.isAbsolute = !get_bit(marker, 0);
         if(block.time.isAbsolute) {
-            block.time.diff = ifs.get();
-        } else {
             ifs.read(reinterpret_cast<char*>(&block.time.absolute), sizeof(block.time.absolute));
+        } else {
+            block.time.diff = ifs.get();
         }
 
         // Bit 4: Size size
