@@ -7,6 +7,7 @@
 #include "Blocks/Block.h"
 #include "Blocks/KeyframeHeader.h"
 #include "Player.h"
+#include "Turret.h"
 
 #include <cstdint>
 #include <vector>
@@ -16,6 +17,7 @@ namespace libol {
     public:
         KeyframeHeader header;
         std::vector<Player> players;
+        std::vector<Turret> turrets;
 
         static Keyframe decode(std::vector<Block>& blocks);
     };

@@ -70,6 +70,12 @@ int test_keyframe(std::vector<std::string> arguments)
         }
     }
 
+    for(auto& turret : frame.turrets) {
+        std::cout << "Turret: " << turret.name << std::endl;
+        std::cout << "IsFountainLaser: " << turret.isFountainLaser << std::endl;
+        std::cout << "IsAttackable: " << turret.isAttackable << std::endl;
+    }
+
     return 0;
 }
 
@@ -81,7 +87,7 @@ int test_rofl(std::vector<std::string> arguments)
     std::ifstream ifs(arguments.at(0), std::ios::binary);
     if (!ifs) {
         std::cerr << "Failed to open " << arguments.at(0) << ": " << strerror(errno) << std::endl;
-	return 2;
+        return 2;
     }
 
     libol::Rofl rofl = libol::Rofl::decode(ifs);

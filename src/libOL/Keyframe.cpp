@@ -7,6 +7,7 @@
 #include "Blocks/Inventory.h"
 #include "Blocks/PlayerStats.h"
 #include "Blocks/Ability.h"
+#include "Blocks/TurretHeader.h"
 
 #include <iostream>
 
@@ -42,9 +43,23 @@ namespace libol {
                 player.abilities.push_back(Ability::decode(blocks[i++]));
                 player.abilities.push_back(Ability::decode(blocks[i++]));
                 player.abilities.push_back(Ability::decode(blocks[i++]));
-                player.abilities.push_back(Ability::decode(blocks[i++]));
+                player.abilities.push_back(Ability::decode(blocks[i]));
 
                 frame.players.push_back(player);
+            }
+
+            if(TurretHeader::test(blocks[i])) {
+                Turret turret;
+
+                auto header = TurretHeader::decode(blocks[i++]);
+                turret.entityId = header.entityId;
+                turret.name = header.name;
+                turret.isFountainLaser = header.isFountainLaser;
+                turret.isAttackable = header.isAttackable;
+
+                turret.items = Inventory::decode(blocks[i]).items;
+
+                frame.turrets.push_back(turret);
             }
         }
 
