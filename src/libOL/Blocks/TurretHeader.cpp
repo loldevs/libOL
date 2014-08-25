@@ -1,56 +1,56 @@
 // Copyright (c) 2014 Andrew Toulouse.
 // Distributed under the MIT License.
 
-#include "TowerHeader.h"
+#include "TurretHeader.h"
 
 #include <iostream>
 #include <cassert>
 
 namespace libol {
-    bool TowerHeader::test(Block& block) {
+    bool TurretHeader::test(Block& block) {
         return (
             block.type == 0x9D
             && block.size == 0x4A
         );
     }
 
-    TowerHeader TowerHeader::decode(Block& block) {
+    TurretHeader TurretHeader::decode(Block& block) {
         assert(test(block));
 
-        TowerHeader tower;
+        TurretHeader turret;
 
         auto stream = block.createStream();
 
-        stream.read(&tower.entityId);
+        stream.read(&turret.entityId);
 
         uint8_t byte;
         stream.read(&byte);
         assert(byte == 0x40);
 
-        // Tower name
+        // Turret name
         char nameChars[0x41];
         stream.read(nameChars, 0x40);
         nameChars[0x40] = 0x00;
-        tower.name = nameChars;
+        turret.name = nameChars;
 
         uint32_t type;
         stream.read(&type);
         if(type == 0x2) {
-            tower.isFountainLaser = false;
+            turret.isFountainLaser = false;
         } else {
             assert(type == 0x80000000);
-            tower.isFountainLaser = true;
+            turret.isFountainLaser = true;
         }
 
         uint8_t attackable;
         stream.read(&attackable);
         if(attackable == 0x1) {
-            tower.isAttackable = false;
+            turret.isAttackable = false;
         } else {
             assert(attackable == 0x2);
-            tower.isAttackable = true;
+            turret.isAttackable = true;
         }
 
-        return tower;
+        return turret;
     }
 }
