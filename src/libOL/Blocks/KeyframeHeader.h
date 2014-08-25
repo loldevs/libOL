@@ -12,6 +12,8 @@
 namespace libol {
     class KeyframeHeader {
     public:
+    	float timestamp;
+
         static KeyframeHeader decode(Block& block);
     };
 }

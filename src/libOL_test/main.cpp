@@ -40,7 +40,7 @@ int test_keyframe(std::vector<std::string> arguments)
 
     auto frame = libol::Keyframe::decode(blocks);
 
-    //std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
+    std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
 
     for(auto& player : frame.players) {
         std::cout << player.summoner.name << "[" << (unsigned) player.summoner.level << "] as " << player.champion << std::endl;

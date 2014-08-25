@@ -10,6 +10,8 @@ namespace libol {
     KeyframeHeader KeyframeHeader::decode(Block& block) {
         KeyframeHeader header;
         assert(block.type == 0x61 || block.type == 0x62);
+        assert(block.time.isAbsolute);
+        header.timestamp = block.time.absolute;
         assert(block.param.is32);
         assert(block.param.value32 == 0);
         assert(block.size == 2);
