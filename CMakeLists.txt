@@ -32,6 +32,7 @@ set(LIBOL_SOURCES
   src/libOL/Blocks/Inventory.cpp
   src/libOL/Blocks/PlayerStats.cpp
   src/libOL/Blocks/Ability.cpp
+  src/libOL/Blocks/TowerHeader.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")
