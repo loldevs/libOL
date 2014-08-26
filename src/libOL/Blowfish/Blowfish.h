@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <stdexcept>
 
 namespace libol {
     namespace Blowfish {
