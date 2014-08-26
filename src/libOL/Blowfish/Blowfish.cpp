@@ -4,7 +4,6 @@
 #include "Blowfish.h"
 
 #include <memory>
-#include <stdexcept>
 
 extern "C" {
 #include <openssl/blowfish.h>
@@ -38,10 +37,6 @@ namespace libol {
         std::vector<uint8_t> rawDecrypt(std::vector<uint8_t> bytes, std::vector<uint8_t> key) {
                 return ::actuallyDoTheCrypto(bytes, key, false);
         }
-        
-        /** 
-         * \throws std::invalid_argument if the padding size is invalid
-         */
         std::vector<uint8_t> decrypt(std::vector<uint8_t> bytes, std::vector<uint8_t> key) {
                 auto data = rawDecrypt(bytes, key);
 
