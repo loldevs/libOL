@@ -9,6 +9,10 @@
 #include <iostream>
 #include <vector>
 
+#ifdef __linux 
+#include <string.h>
+#endif 
+
 namespace libol {
     class Block {
     public:
