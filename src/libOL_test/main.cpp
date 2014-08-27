@@ -24,20 +24,7 @@ int test_keyframe(std::vector<std::string> arguments)
         return 2;
     }
 
-    std::vector<libol::Block> blocks;
-    libol::Block prev;
-    bool first = true;
-    while(true) {
-        libol::Block block = libol::Block::decode(ifs, first ? nullptr : &prev);
-        first = false;
-        prev = block;
-        ifs.peek(); // provoke eof
-        if(!ifs.eof())
-            blocks.push_back(block);
-        else
-            break;
-    }
-
+    auto blocks = libol::Block::readBlocksFromStream(ifs);
     auto frame = libol::Keyframe::decode(blocks);
 
     std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
@@ -79,6 +66,28 @@ int test_keyframe(std::vector<std::string> arguments)
     return 0;
 }
 
+int test_chunk(std::vector<std::string> arguments)
+{
+    assert(arguments.size() == 1);
+
+    std::ifstream ifs(arguments.at(0), std::ios::binary);
+    if (!ifs) {
+        std::cerr << "Failed to open " << arguments.at(0) << ": " << strerror(errno) << std::endl;
+        return 2;
+    }
+
+    auto blocks = libol::Block::readBlocksFromStream(ifs);
+
+    for(auto& block : blocks) {
+        std::cout << std::hex << "[0x" << block.offset << "]\t";
+        std::cout << std::dec << "time: " << block.time << "s\t";
+        std::cout << std::hex << "type: 0x" << (unsigned) block.type << "\t";
+        std::cout << "param: 0x" << block.entityId << "\t";
+        std::cout << "size: 0x" << block.size << std::endl;
+    }
+
+    return 0;
+}
 
 int test_rofl(std::vector<std::string> arguments)
 {
@@ -99,7 +108,7 @@ int test_rofl(std::vector<std::string> arguments)
 }
 
 int usage(std::string prog_name) {
-    std::cerr << prog_name << " [rofl|keyframe] <rofl/keyframe file>" << std::endl;
+    std::cerr << prog_name << " [rofl|keyframe|chunk] <rofl/keyframe/chunk file>" << std::endl;
     return 1;
 }
 
@@ -123,6 +132,12 @@ int main(int argc, const char * argv[])
         return test_rofl(arguments);
     } else if (command == "keyframe") {
         return test_keyframe(arguments);
+    } else if (command == "chunk") {
+        for(auto& arg : arguments) {
+            std::cout << arg << std::endl;
+            test_chunk(std::vector<std::string> { arg });
+        }
+        return 0;
     }
 
     return usage(executable_name);

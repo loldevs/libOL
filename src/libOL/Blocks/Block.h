@@ -12,23 +12,33 @@
 namespace libol {
     class Block {
     public:
-        struct BlockTime {
-            bool isAbsolute;
-            float absolute;
-            uint8_t diff;
+        size_t offset;
+
+        struct BlockHeader {
+            uint8_t marker;
+
+            bool timeIsAbs;
+            float timeAbs;
+            uint8_t timeDiff;
+
+            bool sizeIs32;
+            uint8_t size8;
+            uint32_t size32;
+
+            bool hasExplicitType;
+            uint8_t type;
+
+            bool paramIs32;
+            uint8_t param8;
+            uint32_t param32;
         };
 
-        struct BlockParam {
-            bool is32;
-            uint8_t value8;
-            uint32_t value32;
-        };
+        BlockHeader header;
 
-        BlockTime time;
-        uint32_t size;
-        bool hasExplicitType;
+        float time;
         uint8_t type;
-        BlockParam param;
+        uint32_t entityId; // (?)
+        uint32_t size;
 
         std::vector<uint8_t> content;
 
@@ -72,7 +82,8 @@ namespace libol {
 
         Stream createStream(size_t offset = 0);
 
-        static Block decode(std::ifstream& ifs, Block* previous);
+        static Block decode(std::ifstream& ifs);
+        static std::vector<Block> readBlocksFromStream(std::ifstream& ifs);
     };
 }
 

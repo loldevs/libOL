@@ -17,45 +17,43 @@ namespace libol {
         return stream;
     }
 
-    Block Block::decode(std::ifstream& ifs, Block* previous) {
+    Block Block::decode(std::ifstream& ifs) {
         Block block;
 
-        uint8_t marker = ifs.get();
+        block.offset = ifs.tellg();
+
+        block.header.marker = ifs.get();
 
         // Bit 1: Time format
-        block.time.isAbsolute = !get_bit(marker, 0);
-        if(block.time.isAbsolute) {
-            ifs.read(reinterpret_cast<char*>(&block.time.absolute), sizeof(block.time.absolute));
+        block.header.timeIsAbs = !get_bit(block.header.marker, 0);
+        if(block.header.timeIsAbs) {
+            ifs.read(reinterpret_cast<char*>(&block.header.timeAbs), sizeof(block.header.timeAbs));
         } else {
-            block.time.diff = ifs.get();
+            block.header.timeDiff = ifs.get();
         }
 
         // Bit 4: Size size
-        if(get_bit(marker, 3)) {
-            block.size = (unsigned) ifs.get();
+        block.header.sizeIs32 = !get_bit(block.header.marker, 3);
+        if(block.header.sizeIs32) {
+            ifs.read(reinterpret_cast<char*>(&block.header.size32), sizeof(block.header.size32));
+            block.size = block.header.size32;
         } else {
-            ifs.read(reinterpret_cast<char*>(&block.size), sizeof(block.size));
+            block.header.size8 = ifs.get();
+            block.size = (unsigned) block.header.size8;
         }
 
         // Bit 2: Has type
-        block.hasExplicitType = !get_bit(marker, 1);
-        if(block.hasExplicitType) {
-            block.type = ifs.get();
-        } else {
-            if(previous != nullptr) {
-                block.type = previous->type;
-            } else {
-                std::cout << "typeless block as first block" << std::endl;
-                exit(1);
-            }
+        block.header.hasExplicitType = !get_bit(block.header.marker, 1);
+        if(block.header.hasExplicitType) {
+            block.header.type = ifs.get();
         }
 
         // Bit 3: Blockdata size
-        block.param.is32 = !get_bit(marker, 2);
-        if(block.param.is32) {
-            ifs.read(reinterpret_cast<char*>(&block.param.value32), sizeof(block.param.value32));
+        block.header.paramIs32 = !get_bit(block.header.marker, 2);
+        if(block.header.paramIs32) {
+            ifs.read(reinterpret_cast<char*>(&block.header.param32), sizeof(block.header.param32));
         } else {
-            block.param.value8 = ifs.get();
+            block.header.param8 = ifs.get();
         }
 
         // Read content
@@ -63,5 +61,45 @@ namespace libol {
         ifs.read(reinterpret_cast<char*>(block.content.data()), block.size);
 
         return block;
+    }
+
+    std::vector<Block> Block::readBlocksFromStream(std::ifstream& ifs) {
+        std::vector<Block> result;
+
+        while(true) {
+            Block block = Block::decode(ifs);
+            ifs.peek(); // provoke eof
+            if(!ifs.eof())
+                result.push_back(block);
+            else
+                break;
+        }
+
+        float gametime = 0;
+        uint8_t currType;
+        uint32_t currEntityId;
+
+        for(auto& block : result) {
+            if(block.header.timeIsAbs) {
+                gametime = block.header.timeAbs;
+            } else {
+                gametime += block.header.timeDiff / 1000.0;
+            }
+            block.time = gametime;
+
+            if(block.header.hasExplicitType) {
+                currType = block.header.type;
+            }
+            block.type = currType;
+
+            if(block.header.paramIs32) {
+                currEntityId = block.header.param32;
+            } else {
+                currEntityId += block.header.param8;
+            }
+            block.entityId = currEntityId;
+        }
+
+        return result;
     }
 }
