@@ -8,6 +8,7 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 namespace libol {
     class Block {
