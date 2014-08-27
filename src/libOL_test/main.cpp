@@ -133,11 +133,7 @@ int main(int argc, const char * argv[])
     } else if (command == "keyframe") {
         return test_keyframe(arguments);
     } else if (command == "chunk") {
-        for(auto& arg : arguments) {
-            std::cout << arg << std::endl;
-            test_chunk(std::vector<std::string> { arg });
-        }
-        return 0;
+        return test_chunk(arguments);
     }
 
     return usage(executable_name);
