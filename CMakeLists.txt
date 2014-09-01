@@ -31,7 +31,7 @@ set(LIBOL_SOURCES
   src/libOL/Blocks/SummonerData.cpp
   src/libOL/Blocks/Inventory.cpp
   src/libOL/Blocks/PlayerStats.cpp
-  src/libOL/Blocks/Ability.cpp
+  src/libOL/Blocks/AbilityLevel.cpp
   src/libOL/Blocks/TurretHeader.cpp
   src/libOL/Blocks/ItemPurchase.cpp
   src/libOL/Blocks/GoldGain.cpp

@@ -7,7 +7,7 @@
 #include "Blocks/SummonerData.h"
 #include "Blocks/Inventory.h"
 #include "Blocks/PlayerStats.h"
-#include "Blocks/Ability.h"
+#include "Blocks/AbilityLevel.h"
 
 #include <cstdint>
 #include <vector>
@@ -31,7 +31,7 @@ namespace libol {
         Summoner summoner;
         std::array<Inventory::Item, 10> items;
         PlayerStats::Stats stats;
-        std::vector<Ability> abilities;
+        std::vector<AbilityLevel> abilities;
     };
 }
 

@@ -6,7 +6,7 @@
 #include "Blocks/SummonerData.h"
 #include "Blocks/Inventory.h"
 #include "Blocks/PlayerStats.h"
-#include "Blocks/Ability.h"
+#include "Blocks/AbilityLevel.h"
 #include "Blocks/TurretHeader.h"
 
 #include <iostream>
@@ -40,10 +40,10 @@ namespace libol {
                 }
                 player.stats = PlayerStats::decode(blocks[i++]).stats;
 
-                player.abilities.push_back(Ability::decode(blocks[i++]));
-                player.abilities.push_back(Ability::decode(blocks[i++]));
-                player.abilities.push_back(Ability::decode(blocks[i++]));
-                player.abilities.push_back(Ability::decode(blocks[i]));
+                player.abilities.push_back(AbilityLevel::decode(blocks[i++]));
+                player.abilities.push_back(AbilityLevel::decode(blocks[i++]));
+                player.abilities.push_back(AbilityLevel::decode(blocks[i++]));
+                player.abilities.push_back(AbilityLevel::decode(blocks[i]));
 
                 frame.players.push_back(player);
             }

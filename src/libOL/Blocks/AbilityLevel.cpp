@@ -1,17 +1,17 @@
 // Copyright (c) 2014 Andrew Toulouse.
 // Distributed under the MIT License.
 
-#include "Ability.h"
+#include "AbilityLevel.h"
 
 #include <iostream>
 #include <cassert>
 
 namespace libol {
-    Ability Ability::decode(Block& block) {
+    AbilityLevel AbilityLevel::decode(Block& block) {
         assert(block.type == 0x15);
         assert(block.size == 0x3);
 
-        Ability entry;
+        AbilityLevel entry;
 
         entry.abilityId = block.content[0];
         entry.level = block.content[1];
