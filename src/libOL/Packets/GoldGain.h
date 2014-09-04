@@ -4,18 +4,18 @@
 #ifndef __libol__GoldGain__
 #define __libol__GoldGain__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 
 namespace libol {
-    class GoldGain {
+    class GoldGain : public Packet {
     public:
         uint32_t entityId;
         float amount;
 
+        GoldGain(Block& block);
         static bool test(Block& block);
-        static GoldGain decode(Block& block);
     };
 }
 

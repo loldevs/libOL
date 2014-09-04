@@ -14,14 +14,10 @@ namespace libol {
         );
     }
 
-    TurretHeader TurretHeader::decode(Block& block) {
-        assert(test(block));
-
-        TurretHeader turret;
-
+    TurretHeader::TurretHeader(Block& block) {
         auto stream = block.createStream();
 
-        stream.read(&turret.entityId);
+        stream.read(&entityId);
 
         uint8_t byte;
         stream.read(&byte);
@@ -31,26 +27,24 @@ namespace libol {
         char nameChars[0x41];
         stream.read(nameChars, 0x40);
         nameChars[0x40] = 0x00;
-        turret.name = nameChars;
+        name = nameChars;
 
         uint32_t type;
         stream.read(&type);
         if(type == 0x2) {
-            turret.isFountainLaser = false;
+            isFountainLaser = false;
         } else {
             assert(type == 0x80000000);
-            turret.isFountainLaser = true;
+            isFountainLaser = true;
         }
 
         uint8_t attackable;
         stream.read(&attackable);
         if(attackable == 0x1) {
-            turret.isAttackable = false;
+            isAttackable = false;
         } else {
             assert(attackable == 0x2);
-            turret.isAttackable = true;
+            isAttackable = true;
         }
-
-        return turret;
     }
 }

@@ -4,8 +4,8 @@
 #ifndef __libol__Keyframe__
 #define __libol__Keyframe__
 
-#include "Blocks/Block.h"
-#include "Blocks/KeyframeHeader.h"
+#include "Block.h"
+#include "PacketReader.h"
 #include "Player.h"
 #include "Turret.h"
 
@@ -19,7 +19,7 @@ namespace libol {
         std::vector<Player> players;
         std::vector<Turret> turrets;
 
-        static Keyframe decode(std::vector<Block>& blocks);
+        Keyframe(std::vector<Block>& blocks);
     };
 }
 

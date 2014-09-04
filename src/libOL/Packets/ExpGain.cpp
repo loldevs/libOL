@@ -14,17 +14,11 @@ namespace libol {
         );
     }
 
-    ExpGain ExpGain::decode(Block& block) {
-        assert(test(block));
-
-        ExpGain msg;
-
+    ExpGain::ExpGain(Block& block) {
         auto stream = block.createStream();
 
-        stream.read(&msg.entityId);
-        stream.read(&msg.victim);
-        stream.read(&msg.amount);
-
-        return msg;
+        stream.read(&entityId);
+        stream.read(&victim);
+        stream.read(&amount);
     }
 }

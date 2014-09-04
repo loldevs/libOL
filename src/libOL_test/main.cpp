@@ -10,6 +10,7 @@
 
 #include <libOL/Chunks.h>
 #include <libOL/Rofl.h>
+#include <libOL/PacketReader.h>
 #include <libOL/Keyframe.h>
 
 #define MAX_ARGUMENT_LENGTH 600
@@ -25,7 +26,7 @@ int test_keyframe(std::vector<std::string> arguments)
     }
 
     auto blocks = libol::Block::readBlocksFromStream(ifs);
-    auto frame = libol::Keyframe::decode(blocks);
+    libol::Keyframe frame(blocks);
 
     std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
 
@@ -77,14 +78,28 @@ int test_chunk(std::vector<std::string> arguments)
     }
 
     auto blocks = libol::Block::readBlocksFromStream(ifs);
+    auto parser = libol::PacketReader();
 
+    parser.on<libol::AbilityLevel>([] (const libol::AbilityLevel& level) {
+        std::cout << level.timestamp << "s: ";
+        std::cout << level.entityId << " leveled up " << (unsigned) level.abilityId << " to ";
+        std::cout << (unsigned) level.level << std::endl;
+    });
+
+    parser.onPacket([] (libol::Packet* pkt) {
+        std::cout << "I understood a packet! " << pkt->timestamp << std::endl;
+    });
+
+    for(auto& block : blocks) parser.read(block);
+
+    /*
     for(auto& block : blocks) {
         std::cout << std::hex << "[0x" << block.offset << "]\t";
         std::cout << std::dec << "time: " << block.time << "s\t";
         std::cout << std::hex << "type: 0x" << (unsigned) block.type << "\t";
         std::cout << "param: 0x" << block.entityId << "\t";
         std::cout << "size: 0x" << block.size << std::endl;
-    }
+    }*/
 
     return 0;
 }

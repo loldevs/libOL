@@ -4,13 +4,13 @@
 #ifndef __libol__Inventory__
 #define __libol__Inventory__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 #include <array>
 
 namespace libol {
-    class Inventory {
+    class Inventory : public Packet {
     public:
         struct Item {
             uint32_t itemId;
@@ -21,9 +21,11 @@ namespace libol {
             float baseCooldown;
         };
 
+        uint32_t entityId;
         std::array<Item, 10> items;
 
-        static Inventory decode(Block& ifs);
+        Inventory(Block& ifs);
+        static bool test(Block& ifs);
     };
 }
 

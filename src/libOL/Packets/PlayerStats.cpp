@@ -18,14 +18,8 @@ namespace libol {
         );
     }
 
-    PlayerStats PlayerStats::decode(Block& block) {
-        assert(test(block));
-
-        PlayerStats stats;
-
+    PlayerStats::PlayerStats(Block& block) {
         if(block.size == 0x128) // TODO: read no jungle maps
-            block.read(&stats.stats, 0x4);
-
-        return stats;
+            block.read(&stats, 0x4);
     }
 }

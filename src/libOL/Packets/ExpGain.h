@@ -4,19 +4,19 @@
 #ifndef __libol__ExpGain__
 #define __libol__ExpGain__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 
 namespace libol {
-    class ExpGain {
+    class ExpGain : public Packet {
     public:
         uint32_t entityId;
         uint32_t victim;
         float amount;
 
+		ExpGain(Block& block);
         static bool test(Block& block);
-        static ExpGain decode(Block& block);
     };
 }
 

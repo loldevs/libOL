@@ -4,7 +4,7 @@
 #ifndef __libol__SummonerData__
 #define __libol__SummonerData__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 #include <array>
@@ -21,14 +21,15 @@ namespace libol {
         static MasteryEntry decode(Block::Stream& ifs);
     };
     
-    class SummonerData {
+    class SummonerData : public Packet {
     public:
         std::array<uint32_t, 30> runes;
         std::array<uint32_t, 2> spells;
         std::vector<MasteryEntry> masteries;
         uint8_t level;
         
-        static SummonerData decode(Block& block);
+        SummonerData(Block& block);
+        static bool test(Block& block);
     };
 }
 

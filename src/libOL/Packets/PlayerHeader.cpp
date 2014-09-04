@@ -14,32 +14,26 @@ namespace libol {
         );
     }
 
-    PlayerHeader PlayerHeader::decode(Block& block) {
-        assert(test(block));
-
-        PlayerHeader player;
-
+    PlayerHeader::PlayerHeader(Block& block) {
         auto stream = block.createStream();
 
-        stream.read(&player.entityId);
-        stream.read(&player.playerNumber);
+        stream.read(&entityId);
+        stream.read(&playerNumber);
 
-        stream.read(player.unk0.data(), player.unk0.size());
+        stream.read(unk0.data(), unk0.size());
 
         // Summoner name
         char summonerChars[0x81];
         stream.read(summonerChars, 0x80);
         summonerChars[0x80] = 0x00;
-        player.summonerName = summonerChars;
+        summonerName = summonerChars;
 
         // Champion name
         char championChars[0x11];
         stream.read(championChars, 0x10);
         championChars[0x10] = 0x00;
-        player.championName = championChars;
+        championName = championChars;
 
-        stream.read(player.unk1.data(), player.unk1.size());
-
-        return player;
+        stream.read(unk1.data(), unk1.size());
     }
 }

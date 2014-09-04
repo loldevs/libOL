@@ -4,18 +4,19 @@
 #ifndef __libol__AbilityLevel__
 #define __libol__AbilityLevel__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 
 namespace libol {
-    class AbilityLevel {
+    class AbilityLevel : public Packet {
     public:
+        uint32_t entityId;
         uint8_t abilityId;
         uint8_t level;
-        /* 00 */
 
-        static AbilityLevel decode(Block& block);
+        AbilityLevel(Block& block);
+        static bool test(Block& block);
     };
 }
 

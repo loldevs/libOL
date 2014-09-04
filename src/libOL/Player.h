@@ -4,10 +4,7 @@
 #ifndef __libol__Player__
 #define __libol__Player__
 
-#include "Blocks/SummonerData.h"
-#include "Blocks/Inventory.h"
-#include "Blocks/PlayerStats.h"
-#include "Blocks/AbilityLevel.h"
+#include "PacketReader.h"
 
 #include <cstdint>
 #include <vector>

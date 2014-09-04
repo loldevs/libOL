@@ -4,12 +4,12 @@
 #ifndef __libol__ItemPurchase__
 #define __libol__ItemPurchase__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 
 namespace libol {
-    class ItemPurchase {
+    class ItemPurchase : public Packet {
     public:
         uint32_t entityId;
         uint32_t itemId;
@@ -17,8 +17,8 @@ namespace libol {
         uint16_t quantity;
         /* 40 */
 
+        ItemPurchase(Block& block);
         static bool test(Block& block);
-        static ItemPurchase decode(Block& block);
     };
 }
 

@@ -4,17 +4,16 @@
 #ifndef __libol__KeyframeHeader__
 #define __libol__KeyframeHeader__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 #include <array>
 
 namespace libol {
-    class KeyframeHeader {
+    class KeyframeHeader : public Packet {
     public:
-    	float timestamp;
-
-        static KeyframeHeader decode(Block& block);
+        KeyframeHeader(Block& block);
+        static bool test(Block& block);
     };
 }
 

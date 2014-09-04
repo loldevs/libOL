@@ -14,16 +14,10 @@ namespace libol {
         );
     }
 
-    GoldGain GoldGain::decode(Block& block) {
-        assert(test(block));
-
-        GoldGain msg;
-
+    GoldGain::GoldGain(Block& block) {
         auto stream = block.createStream();
 
-        stream.read(&msg.entityId);
-        stream.read(&msg.amount);
-
-        return msg;
+        stream.read(&entityId);
+        stream.read(&amount);
     }
 }

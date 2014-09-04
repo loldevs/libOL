@@ -4,7 +4,7 @@
 #ifndef __libol__PlayerHeader__
 #define __libol__PlayerHeader__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 #include <array>
@@ -12,7 +12,7 @@
 #include <string>
 
 namespace libol {
-    class PlayerHeader {
+    class PlayerHeader : public Packet {
     public:
         uint32_t entityId;
         uint32_t playerNumber;
@@ -21,8 +21,8 @@ namespace libol {
         std::string championName;
         std::array<uint8_t, 0x21> unk1;
 
+        PlayerHeader(Block& block);
         static bool test(Block& block);
-        static PlayerHeader decode(Block& block);
     };
 }
 

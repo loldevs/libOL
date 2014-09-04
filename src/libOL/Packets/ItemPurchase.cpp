@@ -14,20 +14,15 @@ namespace libol {
         );
     }
 
-    ItemPurchase ItemPurchase::decode(Block& block) {
-        assert(test(block));
-
-        ItemPurchase entry;
-        entry.entityId = block.entityId;
+    ItemPurchase::ItemPurchase(Block& block) {
+        entityId = block.entityId;
 
         auto stream = block.createStream();
 
-        stream.read(&entry.itemId);
-        stream.read(&entry.slotId);
-        stream.read(&entry.quantity);
+        stream.read(&itemId);
+        stream.read(&slotId);
+        stream.read(&quantity);
 
         assert(block.content[0x7] == 0x40);
-
-        return entry;
     }
 }

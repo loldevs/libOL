@@ -4,12 +4,12 @@
 #ifndef __libol__PlayerStats__
 #define __libol__PlayerStats__
 
-#include "Block.h"
+#include "Packet.h"
 
 #include <cstdint>
 
 namespace libol {
-    class PlayerStats {
+    class PlayerStats : public Packet {
     public:
 
         #pragma pack(push, 1)
@@ -75,8 +75,8 @@ namespace libol {
 
         Stats stats;
 
+        PlayerStats(Block& block);
         static bool test(Block& block);
-        static PlayerStats decode(Block& block);
     };
 }
 

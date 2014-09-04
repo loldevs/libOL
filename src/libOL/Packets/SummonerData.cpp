@@ -30,25 +30,25 @@ namespace libol {
         return entry;
     }
 
-    SummonerData SummonerData::decode(Block& block) {
-        assert(block.type == 0x2A);
-        assert(block.size == 0x212);
+    bool SummonerData::test(Block& block) {
+        return (
+            block.type == 0x2A
+            && block.size == 0x212
+        );
+    }
 
-        SummonerData data;
-
+    SummonerData::SummonerData(Block& block) {
         auto stream = block.createStream();
 
-        stream.read(data.runes.data(), data.runes.size());
-        stream.read(data.spells.data(), data.spells.size());
+        stream.read(runes.data(), runes.size());
+        stream.read(spells.data(), spells.size());
 
         int masteryCount = 0;
         while(MasteryEntry::probe(stream) && masteryCount < 79) {
-            data.masteries.push_back(MasteryEntry::decode(stream));
+            masteries.push_back(MasteryEntry::decode(stream));
             masteryCount++;
         }
 
-        data.level = block.content[0x210];
-
-        return data;
+        level = block.content[0x210];
     }
 }
