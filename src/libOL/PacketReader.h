@@ -25,12 +25,6 @@ namespace libol {
         std::vector< std::function< void (Block&) > > handlers;
         std::vector< std::function< void (Packet*) > > packetHandlers;
 
-        void callBlockHandlers(Block& block) {
-            for(auto handler : handlers) {
-                handler(block);
-            }
-        }
-
         void callPacketHandlers(Packet* packet) {
             for(auto handler : packetHandlers) {
                 handler(packet);
@@ -38,7 +32,9 @@ namespace libol {
         }
     public:
         void read(Block& block) {
-            callBlockHandlers(block);
+            for(auto handler : handlers) {
+                handler(block);
+            }
         }
 
         template<class PACKET>

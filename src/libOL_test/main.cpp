@@ -78,7 +78,7 @@ int test_chunk(std::vector<std::string> arguments)
     }
 
     auto blocks = libol::Block::readBlocksFromStream(ifs);
-    auto parser = libol::PacketReader();
+    libol::PacketReader parser;
 
     parser.on<libol::AbilityLevel>([] (const libol::AbilityLevel& level) {
         std::cout << level.timestamp << "s: ";

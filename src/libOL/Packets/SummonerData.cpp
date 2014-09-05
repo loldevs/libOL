@@ -38,6 +38,8 @@ namespace libol {
     }
 
     SummonerData::SummonerData(Block& block) {
+        entityId = block.entityId;
+
         auto stream = block.createStream();
 
         stream.read(runes.data(), runes.size());

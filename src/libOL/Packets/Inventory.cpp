@@ -17,6 +17,8 @@ namespace libol {
     }
 
     Inventory::Inventory(Block& block) {
+        entityId = block.entityId;
+        
         auto stream = block.createStream(0x2);
 
         for(size_t i = 0; i < items.size(); i++) {

@@ -19,6 +19,8 @@ namespace libol {
     }
 
     PlayerStats::PlayerStats(Block& block) {
+        entityId = block.entityId;
+
         if(block.size == 0x128) // TODO: read no jungle maps
             block.read(&stats, 0x4);
     }

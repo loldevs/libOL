@@ -73,6 +73,7 @@ namespace libol {
 
         #pragma pack(pop)
 
+        uint32_t entityId;
         Stats stats;
 
         PlayerStats(Block& block);

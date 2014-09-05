@@ -23,6 +23,7 @@ namespace libol {
     
     class SummonerData : public Packet {
     public:
+        uint32_t entityId;
         std::array<uint32_t, 30> runes;
         std::array<uint32_t, 2> spells;
         std::vector<MasteryEntry> masteries;
