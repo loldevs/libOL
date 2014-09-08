@@ -37,6 +37,10 @@ namespace libol {
             }
         }
 
+        void read(std::vector<Block>& blocks) {
+            for(auto& block : blocks) read(block);
+        }
+
         template<class PACKET>
         void on(std::function<void (PACKET&)> cb) {
             handlers.push_back([this, cb] (Block& block) {

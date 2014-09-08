@@ -90,7 +90,7 @@ int test_chunk(std::vector<std::string> arguments)
         std::cout << "I understood a packet! " << pkt->timestamp << std::endl;
     });
 
-    for(auto& block : blocks) parser.read(block);
+    parser.read(blocks);
 
     /*
     for(auto& block : blocks) {
