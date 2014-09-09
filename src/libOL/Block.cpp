@@ -62,44 +62,4 @@ namespace libol {
 
         return block;
     }
-
-    std::vector<Block> Block::readBlocksFromStream(std::ifstream& ifs) {
-        std::vector<Block> result;
-
-        while(true) {
-            Block block = Block::decode(ifs);
-            ifs.peek(); // provoke eof
-            if(!ifs.eof())
-                result.push_back(block);
-            else
-                break;
-        }
-
-        float gametime = 0;
-        uint8_t currType;
-        uint32_t currEntityId;
-
-        for(auto& block : result) {
-            if(block.header.timeIsAbs) {
-                gametime = block.header.timeAbs;
-            } else {
-                gametime += block.header.timeDiff / 1000.0;
-            }
-            block.time = gametime;
-
-            if(block.header.hasExplicitType) {
-                currType = block.header.type;
-            }
-            block.type = currType;
-
-            if(block.header.paramIs32) {
-                currEntityId = block.header.param32;
-            } else {
-                currEntityId += block.header.param8;
-            }
-            block.entityId = currEntityId;
-        }
-
-        return result;
-    }
 }

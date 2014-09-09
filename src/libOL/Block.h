@@ -84,7 +84,6 @@ namespace libol {
         Stream createStream(size_t offset = 0);
 
         static Block decode(std::ifstream& ifs);
-        static std::vector<Block> readBlocksFromStream(std::ifstream& ifs);
     };
 }
 
