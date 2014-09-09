@@ -1,29 +1,16 @@
 // Copyright (c) 2014 Andrew Toulouse.
 // Distributed under the MIT License.
 
-#ifndef __libol__PacketReader__
-#define __libol__PacketReader__
+#ifndef __libol__BlockReader__
+#define __libol__BlockReader__
 
 #include "Block.h"
-#include "Packets/Packet.h"
-#include "Packets/KeyframeHeader.h"
-#include "Packets/PlayerHeader.h"
-#include "Packets/SummonerData.h"
-#include "Packets/Inventory.h"
-#include "Packets/PlayerStats.h"
-#include "Packets/AbilityLevel.h"
-#include "Packets/TurretHeader.h"
-#include "Packets/ItemPurchase.h"
-#include "Packets/GoldGain.h"
-#include "Packets/ExpGain.h"
 
 #include <vector>
 #include <ifstream>
 
 namespace libol {
     class BlockReader {
-        std::vector< std::function< void (Block&) > > handlers;
-        
         float lastTime;
         uint8_t lastType;
         uint32_t lastEntId;
