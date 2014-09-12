@@ -13,10 +13,14 @@ namespace libol {
         );
     }
 
-    AbilityLevel::AbilityLevel(Block& block) {
-        entityId = block.entityId;
-        abilityId = block.content[0];
-        level = block.content[1];
-        assert(block.content[3] == 0x00);
+    Value AbilityLevel::decode(Block& block) {
+        Object data = Object();
+
+        data.setv("abilityId", block.content[0]);
+        data.setv("level", block.content[1]);
+
+        assert(block.content[2] == 0x00);
+
+        return Value::create(data);
     }
 }

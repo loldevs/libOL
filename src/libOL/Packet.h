@@ -4,15 +4,15 @@
 #ifndef __libol__Packet__
 #define __libol__Packet__
 
-#include "../Block.h"
+#include "Value.h"
 #include <string>
 
 namespace libol {
-    class Packet {
-    public:
+    struct Packet {
         float timestamp;
-
-        //std::string toString();
+        uint8_t type;
+        uint32_t entityId;
+        Value data;
     };
 }
 

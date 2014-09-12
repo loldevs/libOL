@@ -10,8 +10,9 @@
 
 #include <libOL/Chunks.h>
 #include <libOL/Rofl.h>
-#include <libOL/PacketReader.h>
-#include <libOL/Keyframe.h>
+#include <libOL/BlockReader.h>
+#include <libOL/PacketParser.h>
+// #include <libOL/Keyframe.h>
 
 #define MAX_ARGUMENT_LENGTH 600
 
@@ -25,7 +26,7 @@ int test_keyframe(std::vector<std::string> arguments)
         return 2;
     }
 
-    auto blocks = libol::Block::readBlocksFromStream(ifs);
+    /*auto blocks = libol::Block::readBlocksFromStream(ifs);
     libol::Keyframe frame(blocks);
 
     std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
@@ -62,7 +63,7 @@ int test_keyframe(std::vector<std::string> arguments)
         std::cout << "Turret: " << turret.name << std::endl;
         std::cout << "IsFountainLaser: " << turret.isFountainLaser << std::endl;
         std::cout << "IsAttackable: " << turret.isAttackable << std::endl;
-    }
+    }*/
 
     return 0;
 }
@@ -77,20 +78,16 @@ int test_chunk(std::vector<std::string> arguments)
         return 2;
     }
 
-    auto blocks = libol::Block::readBlocksFromStream(ifs);
-    libol::PacketReader parser;
+    libol::BlockReader reader;
+    auto blocks = reader.readBlocksFromStream(ifs);
 
-    parser.on<libol::AbilityLevel>([] (const libol::AbilityLevel& level) {
-        std::cout << level.timestamp << "s: ";
-        std::cout << level.entityId << " leveled up " << (unsigned) level.abilityId << " to ";
-        std::cout << (unsigned) level.level << std::endl;
-    });
+    libol::PacketParser parser;
 
-    parser.onPacket([] (libol::Packet* pkt) {
-        std::cout << "I understood a packet! " << pkt->timestamp << std::endl;
-    });
-
-    parser.read(blocks);
+    for(auto block : blocks) {
+        libol::Packet pkt = parser.decode(block);
+        if(pkt.type == 0x15)
+            std::cout << pkt.data.toString() << std::endl;
+    }
 
     /*
     for(auto& block : blocks) {
