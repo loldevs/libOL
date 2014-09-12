@@ -7,7 +7,7 @@
 #include "Block.h"
 
 #include <vector>
-#include <ifstream>
+#include <fstream>
 
 namespace libol {
     class BlockReader {
@@ -29,14 +29,16 @@ namespace libol {
             block.type = lastType;
 
             if (block.header.paramIs32) {
-                lastEntID = block.header.param32;
+                lastEntId = block.header.param32;
             } else {
-                lastEntID += block.header.param8;
+                lastEntId += block.header.param8;
             }
-            block.entityId = lastEntID;
+            block.entityId = lastEntId;
         }
     public:
         std::vector<Block> readBlocksFromStream(std::ifstream& ifs) {
+            std::vector<Block> result;
+
              while (true) {
                 Block block = Block::decode(ifs);
                 ifs.peek(); // provoke eof
