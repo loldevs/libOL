@@ -6,34 +6,35 @@
 
 #include "Block.h"
 #include "Packet.h"
-/*#include "Packets/KeyframeHeader.h"
-#include "Packets/PlayerHeader.h"
-#include "Packets/SummonerData.h"
-#include "Packets/Inventory.h"
-#include "Packets/PlayerStats.h"*/
-#include "Packets/AbilityLevel.h"
-/*#include "Packets/TurretHeader.h"
-#include "Packets/ItemPurchase.h"
-#include "Packets/GoldGain.h"
-#include "Packets/ExpGain.h"*/
+#include "PacketDecoders.h"
 
 #include <vector>
 #include <fstream>
 
 namespace libol {
-    typedef std::pair< std::function< bool (Block&) >, std::function< Value (Block&) > > PacketDecoder;
     class PacketParser {
+        struct PacketDecoder {
+            std::function< std::string () > getName;
+            std::function< bool (Block&) > test;
+            std::function< Value (Block&) > decode;
+        };
         std::vector< PacketDecoder > decoders;
 
     public:
         PacketParser() {
-            registerPacket<AbilityLevel>();
+            registerPacket<SetAbilityLevelPkt>();
+            registerPacket<ExpGainPkt>();
+            registerPacket<GoldGainPkt>();
+            registerPacket<SetInventoryPkt>();
+            registerPacket<ItemPurchasePkt>();
+            registerPacket<HeroSpawnPkt>();
+            registerPacket<SummonerDataPkt>();
         }
 
         template<class PACKET>
         void registerPacket() {
-            decoders.push_back(PacketDecoder(PACKET::test, PACKET::decode));
-        }
+            decoders.push_back(PacketDecoder({PACKET::name, PACKET::test, PACKET::decode}));
+        };
 
         Packet decode(Block& block) {
             Packet packet;
@@ -42,13 +43,15 @@ namespace libol {
             packet.type = block.type;
             packet.entityId = block.entityId;
 
+            packet.isDecoded = false;
             for(auto& decoder : decoders) {
-                if(decoder.first(block)) {
-                    packet.data = decoder.second(block);
+                if(decoder.test(block)) {
+                    packet.isDecoded = true;
+                    packet.typeName = decoder.getName();
+                    packet.data = decoder.decode(block);
                     break;
                 }
             }
-            // TODO: do something if no decoder found
 
             return packet;
         }

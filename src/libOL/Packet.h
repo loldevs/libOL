@@ -12,6 +12,9 @@ namespace libol {
         float timestamp;
         uint8_t type;
         uint32_t entityId;
+
+        bool isDecoded;
+        std::string typeName;
         Value data;
     };
 }
