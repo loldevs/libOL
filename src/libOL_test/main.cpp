@@ -138,7 +138,7 @@ int test_rofl(std::vector<std::string> arguments)
 }
 
 int usage(std::string prog_name) {
-    std::cerr << prog_name << " [rofl|keyframe|blocks] <rofl/keyframe/blocks file>" << std::endl;
+    std::cerr << prog_name << " [rofl|keyframe|blocks|packets] <rofl/keyframe/blocks/packets file>" << std::endl;
     return 1;
 }
 
