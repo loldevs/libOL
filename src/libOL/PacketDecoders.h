@@ -17,16 +17,18 @@ namespace libol {
         static std::string name() { return "SetAbilityLevel"; }
 
         static bool test(Block& block) {
-            return block.type == PacketType::SetAbilityLevel && block.size == 0x3;
+            return block.type == PacketType::SetAbilityLevel;
         }
 
         static Value decode(Block& block) {
+            assert(block.size == 0x3);
+
             Object data = Object();
 
             data.setv("abilityId", block.content[0]);
             data.setv("level", block.content[1]);
 
-            assert(block.content[2] == 0x00);
+            //assert(block.content[2] == 0x00);
 
             return Value::create(data);
         }
@@ -37,10 +39,12 @@ namespace libol {
         static std::string name() { return "ExpGain"; }
 
         static bool test(Block& block) {
-            return block.type == PacketType::ExpGain && block.size == 0xc;
+            return block.type == PacketType::ExpGain;
         }
 
         static Value decode(Block& block) {
+            assert(block.size == 0xc);
+
             Object data = Object();
 
             auto stream = block.createStream();
@@ -58,10 +62,12 @@ namespace libol {
         static std::string name() { return "GoldGain"; }
 
         static bool test(Block& block) {
-            return block.type == PacketType::GoldGain && block.size == 0x8;
+            return block.type == PacketType::GoldGain;
         }
 
         static Value decode(Block& block) {
+            assert(block.size == 0x8);
+
             Object data = Object();
 
             auto stream = block.createStream();
@@ -78,10 +84,12 @@ namespace libol {
         static std::string name() { return "SetInventory"; }
 
         static bool test(Block& block) {
-            return block.type == 0xFE && block.size == 0x98 && block.content[0] == 0x0C && block.content[1] == 0x01;
+            return block.type == 0xFE && block.content[0] == 0x0C && block.content[1] == 0x01;
         }
 
         static Value decode(Block& block) {
+            assert(block.size == 0x98);
+
             Object data = Object();
             std::array<Object, 10> items;
 
@@ -116,10 +124,12 @@ namespace libol {
         static std::string name() { return "ItemPurchase"; }
 
         static bool test(Block& block) {
-            return block.type == PacketType::ItemPurchase && block.size == 0x8;
+            return block.type == PacketType::ItemPurchase;
         }
 
         static Value decode(Block& block) {
+            assert(block.size == 0x8);
+
             Object data = Object();
 
             auto stream = block.createStream();
@@ -139,10 +149,12 @@ namespace libol {
         static std::string name() { return "HeroSpawn"; }
 
         static bool test(Block& block) {
-            return block.type == PacketType::HeroSpawn && block.size == 0xC3;
+            return block.type == PacketType::HeroSpawn;
         }
 
         static Value decode(Block& block) {
+            assert(block.size == 0xC3);
+
             Object data = Object();
 
             auto stream = block.createStream();
@@ -175,10 +187,12 @@ namespace libol {
         static std::string name() { return "SummonerData"; }
 
         static bool test(Block& block) {
-            return block.type == PacketType::SummonerData && block.size == 0x212;
+            return block.type == PacketType::SummonerData;
         }
 
         static Value decode(Block& block) {
+            assert(block.size == 0x212);
+
             Object data = Object();
 
             auto stream = block.createStream();
@@ -230,10 +244,10 @@ namespace libol {
         static Value decode(Block& block) {
             bool hasJungleStats;
             switch(block.size) {
-                case 0x120:
+                case 0x128:
                     hasJungleStats = false;
                     break;
-                case 0x128:
+                case 0x130:
                     hasJungleStats = true;
                     break;
                 default:
@@ -242,7 +256,7 @@ namespace libol {
 
             Object data = Object();
 
-            auto stream = block.createStream();
+            auto stream = block.createStream(0x4);
 
             data.setv("assists", stream.read<uint32_t>());
             stream.ignore(0x4);
@@ -270,6 +284,7 @@ namespace libol {
                 data.setv("neutralMinionsKilledInEnemyJungle", stream.read<uint32_t>());
                 data.setv("neutralMinionsKilledInTeamJungle", stream.read<uint32_t>());
             }
+            stream.ignore(0x4);
             data.setv("deaths", stream.read<uint32_t>());
             data.setv("pentaKills", stream.read<uint32_t>());
             data.setv("physicalDamageDealt", stream.read<float>());
@@ -279,7 +294,7 @@ namespace libol {
             data.setv("quadraKills", stream.read<uint32_t>());
             stream.ignore(9 * 0x4);
             data.setv("teamId", stream.read<uint32_t>());
-            stream.ignore(3 * 0x4);
+            stream.ignore(4 * 0x4);
             data.setv("totalDamageDealt", stream.read<float>());
             data.setv("totalDamageDealtToChamptions", stream.read<float>());
             data.setv("totalDamageTaken", stream.read<float>());

@@ -29,6 +29,7 @@ namespace libol {
             registerPacket<ItemPurchasePkt>();
             registerPacket<HeroSpawnPkt>();
             registerPacket<SummonerDataPkt>();
+            registerPacket<PlayerStatsPkt>();
         }
 
         template<class PACKET>
