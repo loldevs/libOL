@@ -340,6 +340,10 @@ namespace libol {
                 Object update = Object();
 
                 uint8_t numCoords = stream.get(); // includes the 2 start coords
+                if(numCoords % 2 != 0) {
+                    std::cout << "odd numCoords @ " << block.offset << std::endl;
+                    exit(1);
+                }
                 update.setv("entityId", stream.read<uint32_t>());
 
                 std::vector<uint8_t> bitmask; // defines if a coord is relative for non-start coords
