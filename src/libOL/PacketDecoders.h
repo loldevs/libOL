@@ -10,6 +10,7 @@
 
 #include <cstdint>
 #include <cassert>
+#include <cmath>
 
 namespace libol {
     class SetAbilityLevelPkt {
@@ -313,6 +314,70 @@ namespace libol {
             data.setv("wardsPlaced", stream.read<uint32_t>());
             stream.ignore(2 * 0x4);
             stream.ignore(0x2); // Padding
+
+            return Value::create(data);
+        }
+    };
+
+    class MovementGroupPkt {
+    public:
+        static std::string name() { return "MovementGroup"; }
+
+        static bool test(Block& block) {
+            return block.type == PacketType::MovementGroup;
+        }
+
+        static Value decode(Block& block) {
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("timestamp", stream.read<uint32_t>()); // in ms from start
+            uint16_t numUpdates = stream.read<uint16_t>();
+
+            Array updates = Array();
+            while(numUpdates--) {
+                Object update = Object();
+
+                uint8_t numCoords = stream.get(); // includes the 2 start coords
+                update.setv("entityId", stream.read<uint32_t>());
+
+                std::vector<uint8_t> bitmask; // defines if a coord is relative for non-start coords
+                if(numCoords > 2) {
+                    size_t bmSize = std::floor((numCoords - 3) / 8.f) + 1;
+                    for (size_t i = 0; i < bmSize; i++)
+                        bitmask.push_back(stream.get());
+                }
+
+                int16_t startX = stream.read<int16_t>();
+                int16_t startY = stream.read<int16_t>();
+                Object start = Object();
+                start.setv("x", startX);
+                start.setv("y", startY);
+                update.setv("position", start);
+
+                Array waypoints = Array();
+                for(size_t i = 0; i < numCoords - 2; i++) {
+                    Object point = Object();
+
+                    if(bitmask[floor(i  / 8.f)] & (1 << i % 8))
+                        point.setv("x", startX + stream.read<int8_t>());
+                    else
+                        point.setv("x", stream.read<int16_t>());
+
+                    i++;
+                    if(bitmask[floor(i / 8.f)] & (1 << i % 8))
+                        point.setv("y", startY + stream.read<int8_t>());
+                    else
+                        point.setv("y", stream.read<int16_t>());
+
+                    waypoints.pushv(point);
+                }
+                update.setv("waypoints", waypoints);
+
+                updates.pushv(update);
+            }
+            data.setv("updates", updates);
 
             return Value::create(data);
         }

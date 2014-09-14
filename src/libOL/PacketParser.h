@@ -30,6 +30,7 @@ namespace libol {
             registerPacket<HeroSpawnPkt>();
             registerPacket<SummonerDataPkt>();
             registerPacket<PlayerStatsPkt>();
+            registerPacket<MovementGroupPkt>();
         }
 
         template<class PACKET>

@@ -44,6 +44,16 @@ Value Value::create(uint8_t& val) {
     return create(intval);
 }
 
+Value Value::create(int16_t& val) {
+    int32_t intval = (int32_t)val;
+    return create(intval);
+}
+
+Value Value::create(int8_t& val) {
+    int32_t intval = (int32_t) val;
+    return create(intval);
+}
+
 Value Value::create(int32_t& val) {
     Value value;
     value.type = INTEGER;
@@ -56,6 +66,11 @@ Value Value::create(std::string& val) {
     value.type = STRING;
     value.value = new std::string(val);
     return value;
+}
+
+Value Value::create(const char*& val) {
+    std::string str = std::string(val);
+    return create(str);
 }
 
 std::string Value::toString() {

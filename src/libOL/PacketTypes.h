@@ -15,7 +15,8 @@ namespace libol {
             SummonerData = 0x2A,
             PlayerStats = 0x46,
             HeroSpawn = 0x4C,
-            StartSpawn = 0x62,
+            MovementGroup = 0x61,
+            StartSpawn,
             ItemPurchase = 0x6F,
             TurretSpawn = 0x9D,
             GoldGain = 0xE4
