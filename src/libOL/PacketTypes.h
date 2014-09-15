@@ -15,6 +15,7 @@ namespace libol {
             ExpGain = 0x22,
             SummonerData = 0x2A,
             AttentionPing = 0x40,
+            PlayEmote = 0x42,
             PlayerStats = 0x46,
             HeroSpawn = 0x4C,
             MovementGroup = 0x61,
