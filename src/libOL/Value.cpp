@@ -90,27 +90,33 @@ Value Value::create(const char*& val) {
     return create(str);
 }
 
-std::string Value::toString() {
-    std::stringstream result;
+std::string Value::toString(size_t indent) {
+    std::stringstream result, tabs;
+    for(size_t i = 0; i < indent; i++)
+        tabs << "\t";
+    std::string indentation = tabs.str();
+
     switch(type) {
         case OBJECT: {
             Object& obj = this->as<Object>();
             result << "{" << std::endl;
             for(auto it = obj.begin(); it != obj.end();) {
-                result << "\"" << it->first << "\": ";
-                result << it->second.toString();
+                result << indentation << "\t\"" << it->first << "\": ";
+                result << it->second.toString(indent + 1);
                 if(++it != obj.end())
                     result << ",";
                 result << std::endl;
             }
-            result << "}" << std::endl;
+            if(obj.size())
+                result << indentation;
+            result << "}";
             break;
         }
         case ARRAY: {
             Array &arr = this->as<Array>();
             result << "[";
             for(size_t i = 0; i < arr.size(); i++) {
-                result << arr.at(i).toString();
+                result << arr.at(i).toString(indent);
                 if (i + 1 < arr.size())
                     result << ",";
             }

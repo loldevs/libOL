@@ -39,7 +39,7 @@ public:
         return *reinterpret_cast<T*>(value);
     }
 
-    std::string toString();
+    std::string toString(size_t indent = 0);
 
     static Value create(Object& val);
     static Value create(Array& val);
