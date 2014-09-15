@@ -20,6 +20,7 @@ namespace libol {
             HeroSpawn = 0x4C,
             MovementGroup = 0x61,
             StartSpawn,
+            DamageDone = 0x65,
             ItemPurchase = 0x6F,
             TurretSpawn = 0x9D,
             GoldGain = 0xE4

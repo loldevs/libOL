@@ -454,6 +454,30 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class DamageDonePkt {
+    public:
+        static std::string name() { return "DamageDone"; }
+
+        static bool test(Block& block) {
+            return block.type == PacketType::DamageDone;
+        }
+
+        static Value decode(Block& block) {
+            assert(block.size == 0xd);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("type", stream.read<uint8_t>());
+            data.setv("receiverEntId", stream.read<uint32_t>());
+            data.setv("sourceEntId", stream.read<uint32_t>());
+            data.setv("amount", stream.read<float>());
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */
