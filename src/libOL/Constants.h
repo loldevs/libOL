@@ -67,6 +67,29 @@ namespace libol {
             }
         }
     };
+
+    struct AttentionPingType {
+        enum Id : uint8_t {
+            Default = 0xb0,
+            Danger = 0xb2,
+            EnemyMissing,
+            OnMyWay,
+            Retreat,
+            AssistanceNeeded
+        };
+
+        static std::string getName(uint8_t id) {
+            switch(id) {
+                case Default: return "Default";
+                case Danger: return "Danger";
+                case EnemyMissing: return "EnemyMissing";
+                case OnMyWay: return "OnMyWay";
+                case Retreat: return "Retreat";
+                case AssistanceNeeded: return "AssistanceNeeded";
+                default: return "UnknownPingType";
+            }
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketTypes__) */

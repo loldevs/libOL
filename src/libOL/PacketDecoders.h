@@ -432,7 +432,10 @@ namespace libol {
             data.setv("y", stream.read<float>());
             data.setv("targetEntId", stream.read<uint32_t>());
             data.setv("playerEntId", stream.read<uint32_t>());
-            data.setv("type", stream.read<uint8_t>());
+
+            uint8_t type = stream.read<uint8_t>();
+            data.setv("type", type);
+            data.setv("typeName", AttentionPingType::getName(type));
 
             return Value::create(data);
         }
