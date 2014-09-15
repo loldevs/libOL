@@ -204,8 +204,12 @@ namespace libol {
             }
             data.setv("runes", runes);
 
-            data.setv("spell1", stream.read<uint32_t>());
-            data.setv("spell2", stream.read<uint32_t>());
+            uint32_t spell1Id = stream.read<uint32_t>();
+            uint32_t spell2Id = stream.read<uint32_t>();
+            data.setv("spell1", spell1Id);
+            data.setv("spell1Name", SummonerSpell::getName(spell1Id));
+            data.setv("spell2", spell2Id);
+            data.setv("spell2Name", SummonerSpell::getName(spell2Id));
 
             Array masteries = Array();
             size_t masteryCount = 0;
