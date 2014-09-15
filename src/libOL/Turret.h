@@ -4,8 +4,7 @@
 #ifndef __libol__Turret__
 #define __libol__Turret__
 
-#include "Blocks/TurretHeader.h"
-#include "Blocks/Inventory.h"
+#include "PacketReader.h"
 
 #include <cstdint>
 #include <vector>

@@ -10,7 +10,10 @@
 
 #include <libOL/Chunks.h>
 #include <libOL/Rofl.h>
-#include <libOL/Keyframe.h>
+#include <libOL/BlockReader.h>
+#include <libOL/PacketParser.h>
+#include <Python/Python.h>
+// #include <libOL/Keyframe.h>
 
 #define MAX_ARGUMENT_LENGTH 600
 
@@ -24,8 +27,8 @@ int test_keyframe(std::vector<std::string> arguments)
         return 2;
     }
 
-    auto blocks = libol::Block::readBlocksFromStream(ifs);
-    auto frame = libol::Keyframe::decode(blocks);
+    /*auto blocks = libol::Block::readBlocksFromStream(ifs);
+    libol::Keyframe frame(blocks);
 
     std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
 
@@ -61,12 +64,12 @@ int test_keyframe(std::vector<std::string> arguments)
         std::cout << "Turret: " << turret.name << std::endl;
         std::cout << "IsFountainLaser: " << turret.isFountainLaser << std::endl;
         std::cout << "IsAttackable: " << turret.isAttackable << std::endl;
-    }
+    }*/
 
     return 0;
 }
 
-int test_chunk(std::vector<std::string> arguments)
+int test_blocks(std::vector<std::string> arguments)
 {
     assert(arguments.size() == 1);
 
@@ -76,7 +79,8 @@ int test_chunk(std::vector<std::string> arguments)
         return 2;
     }
 
-    auto blocks = libol::Block::readBlocksFromStream(ifs);
+    libol::BlockReader reader;
+    auto blocks = reader.readBlocksFromStream(ifs);
 
     for(auto& block : blocks) {
         std::cout << std::hex << "[0x" << block.offset << "]\t";
@@ -88,6 +92,32 @@ int test_chunk(std::vector<std::string> arguments)
 
     return 0;
 }
+
+int test_packets(std::vector<std::string> arguments)
+{
+    assert(arguments.size() == 1);
+
+    std::ifstream ifs(arguments.at(0), std::ios::binary);
+    if (!ifs) {
+        std::cerr << "Failed to open " << arguments.at(0) << ": " << strerror(errno) << std::endl;
+        return 2;
+    }
+
+    libol::BlockReader reader;
+    auto blocks = reader.readBlocksFromStream(ifs);
+
+    libol::PacketParser parser;
+
+    for(auto block : blocks) {
+        libol::Packet pkt = parser.decode(block);
+        if(pkt.isDecoded) {
+            std::cout << pkt.typeName << ": " << pkt.data.toString() << std::endl;
+        }
+    }
+
+    return 0;
+}
+
 
 int test_rofl(std::vector<std::string> arguments)
 {
@@ -108,7 +138,7 @@ int test_rofl(std::vector<std::string> arguments)
 }
 
 int usage(std::string prog_name) {
-    std::cerr << prog_name << " [rofl|keyframe|chunk] <rofl/keyframe/chunk file>" << std::endl;
+    std::cerr << prog_name << " [rofl|keyframe|blocks|packets] <rofl/keyframe/blocks/packets file>" << std::endl;
     return 1;
 }
 
@@ -132,8 +162,10 @@ int main(int argc, const char * argv[])
         return test_rofl(arguments);
     } else if (command == "keyframe") {
         return test_keyframe(arguments);
-    } else if (command == "chunk") {
-        return test_chunk(arguments);
+    } else if (command == "blocks") {
+        return test_blocks(arguments);
+    } else if (command == "packets") {
+        return test_packets(arguments);
     }
 
     return usage(executable_name);

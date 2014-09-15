@@ -70,6 +70,13 @@ namespace libol {
             uint8_t get() { uint8_t data; read(&data); return data; }
 
             template<class T>
+            T read() {
+                T val;
+                this->block.read(&val, pos);
+                pos += sizeof(T);
+                return val;
+            }
+            template<class T>
             void read(T* dest) {
                 this->block.read(dest, pos);
                 pos += sizeof(T);
@@ -84,7 +91,6 @@ namespace libol {
         Stream createStream(size_t offset = 0);
 
         static Block decode(std::ifstream& ifs);
-        static std::vector<Block> readBlocksFromStream(std::ifstream& ifs);
     };
 }
 

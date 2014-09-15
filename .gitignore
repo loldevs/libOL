@@ -123,6 +123,11 @@ xcuserdata
 *.moved-aside
 
 ####
+# CLion Project files
+
+.idea/
+
+####
 # CMake
 # Ignore CMake-generated files
 CMakeCache.txt
