@@ -386,6 +386,27 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class SetOwnershipPkt {
+    public:
+        static std::string name() { return "SetOwnership"; }
+
+        static bool test(Block& block) {
+            return block.type == PacketType::SetOwnership;
+        }
+
+        static Value decode(Block& block) {
+            assert(block.size == 0x4);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("owner", stream.read<uint32_t>());
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */

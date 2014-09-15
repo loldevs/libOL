@@ -31,6 +31,7 @@ namespace libol {
             registerPacket<SummonerDataPkt>();
             registerPacket<PlayerStatsPkt>();
             registerPacket<MovementGroupPkt>();
+            registerPacket<SetOwnershipPkt>();
         }
 
         template<class PACKET>

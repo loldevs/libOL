@@ -9,6 +9,7 @@
 namespace libol {
     struct PacketType {
         enum : uint8_t {
+            SetOwnership = 0x07,
             EndSpawn = 0x11,
             SetAbilityLevel = 0x15,
             ExpGain = 0x22,
