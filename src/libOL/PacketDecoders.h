@@ -408,6 +408,31 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class AttentionPingPkt {
+    public:
+        static std::string name() { return "AttentionPing"; }
+
+        static bool test(Block& block) {
+            return block.type == PacketType::AttentionPing;
+        }
+
+        static Value decode(Block& block) {
+            assert(block.size == 0x11);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("x", stream.read<float>());
+            data.setv("y", stream.read<float>());
+            data.setv("targetEntId", stream.read<uint32_t>());
+            data.setv("playerEntId", stream.read<uint32_t>());
+            data.setv("type", stream.read<uint8_t>());
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */

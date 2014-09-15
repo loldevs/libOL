@@ -32,6 +32,7 @@ namespace libol {
             registerPacket<PlayerStatsPkt>();
             registerPacket<MovementGroupPkt>();
             registerPacket<SetOwnershipPkt>();
+            registerPacket<AttentionPingPkt>();
         }
 
         template<class PACKET>
