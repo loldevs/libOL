@@ -27,12 +27,7 @@ public:
     void* value;
 
     Value() : type(UNDEFINED), value(nullptr) {}
-
-    ~Value() {
-        // TODO: free things
-        //if(value != nullptr)
-        //    delete value;
-    }
+    void destroy();
 
     template<class T>
     T& as() {

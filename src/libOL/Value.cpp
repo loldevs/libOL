@@ -146,6 +146,46 @@ std::string Value::toString(size_t indent) {
     return result.str();
 }
 
+void Value::destroy() {
+    switch(type) {
+        case OBJECT: {
+            Object& obj = this->as<Object>();
+            for(auto it = obj.begin(); it != obj.end(); it++) {
+                it->second.destroy();
+            }
+            delete &obj;
+            break;
+        }
+        case ARRAY: {
+            Array &arr = this->as<Array>();
+            for(size_t i = 0; i < arr.size(); i++) {
+                arr.at(i).destroy();
+            }
+            delete &arr;
+            break;
+        }
+        case STRING:
+            delete &this->as<std::string>();
+            break;
+        case INTEGER:
+            delete &this->as<int32_t>();
+            break;
+        case LARGE_INTEGER:
+            delete &this->as<int64_t>();
+            break;
+        case FLOAT:
+            delete &this->as<float>();
+            break;
+        case BOOL:
+            delete &this->as<bool>();
+            break;
+        case UNDEFINED:
+            break;
+    }
+    type = UNDEFINED;
+    value = nullptr;
+}
+
 void Object::set(std::string name, Value value) {
     map.insert(std::pair<std::string, Value> {name, value});
 }

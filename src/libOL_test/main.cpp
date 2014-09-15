@@ -113,6 +113,7 @@ int test_packets(std::vector<std::string> arguments)
         if(pkt.isDecoded) {
             std::cout << pkt.typeName << ": " << pkt.data.toString() << std::endl;
         }
+        pkt.data.destroy();
     }
 
     return 0;
