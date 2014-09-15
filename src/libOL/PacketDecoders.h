@@ -502,6 +502,29 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class SetHealthPkt {
+    public:
+        static std::string name() { return "SetHealth"; }
+
+        static bool test(Block& block) {
+            return block.type == PacketType::SetHealth;
+        }
+
+        static Value decode(Block& block) {
+            assert(block.size == 0xa);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            stream.ignore(2);
+            data.setv("maxHealth", stream.read<float>());
+            data.setv("currentHealth", stream.read<float>());
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */

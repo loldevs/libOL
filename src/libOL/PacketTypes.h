@@ -24,6 +24,7 @@ namespace libol {
             DamageDone = 0x65,
             ItemPurchase = 0x6F,
             TurretSpawn = 0x9D,
+            SetHealth = 0xAE,
             GoldGain = 0xE4
         };
     };

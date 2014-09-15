@@ -36,6 +36,7 @@ namespace libol {
             registerPacket<PlayEmotePkt>();
             registerPacket<DamageDonePkt>();
             registerPacket<SetDeathTimerPkt>();
+            registerPacket<SetHealthPkt>();
         }
 
         template<class PACKET>
