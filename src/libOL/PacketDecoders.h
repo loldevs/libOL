@@ -218,7 +218,7 @@ namespace libol {
                 stream.ignore(2);
                 uint8_t test = stream.get();
                 stream.seekg(pos);
-                if(test == 0x03) break;
+                if(test != 0x03) break;
 
                 Object entry = Object();
                 entry.setv("id", stream.get());
@@ -516,6 +516,11 @@ namespace libol {
         }
 
         static Value decode(Block& block) {
+            if(block.size == 0x2) { // TODO
+                std::string unk = "???";
+                return Value::create(unk);
+            }
+
             assert(block.size == 0xa);
 
             Object data = Object();
