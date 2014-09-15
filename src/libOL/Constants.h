@@ -28,6 +28,8 @@ namespace libol {
             GoldGain = 0xE4
         };
     };
+
+    
 }
 
 #endif /* defined(__libol__PacketTypes__) */

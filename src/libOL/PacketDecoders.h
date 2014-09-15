@@ -6,7 +6,7 @@
 
 #include "Value.h"
 #include "Block.h"
-#include "PacketTypes.h"
+#include "Constants.h"
 
 #include <cstdint>
 #include <cassert>
