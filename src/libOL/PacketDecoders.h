@@ -478,6 +478,30 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class SetDeathTimerPkt {
+    public:
+        static std::string name() { return "SetDeathTimer"; }
+
+        static bool test(Block& block) {
+            return block.type == PacketType::SetDeathTimer;
+        }
+
+        static Value decode(Block& block) {
+            assert(block.size == 0x12);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("killerEntId", stream.read<uint32_t>());
+            stream.ignore(8);
+            data.setv("timer", stream.read<float>());
+            stream.ignore(2);
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */

@@ -18,6 +18,7 @@ namespace libol {
             PlayEmote = 0x42,
             PlayerStats = 0x46,
             HeroSpawn = 0x4C,
+            SetDeathTimer = 0x5E,
             MovementGroup = 0x61,
             StartSpawn,
             DamageDone = 0x65,
