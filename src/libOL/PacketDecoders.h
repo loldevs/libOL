@@ -139,7 +139,7 @@ namespace libol {
             data.setv("slot", stream.get());
             data.setv("quantity", stream.read<uint16_t>());
 
-            assert(block.content[0x7] == 0x40);
+            //assert(block.content[0x7] == 0x40);
 
             return Value::create(data);
         }
@@ -340,11 +340,12 @@ namespace libol {
                 Object update = Object();
 
                 uint8_t numCoords = stream.get(); // includes the 2 start coords
-                if(numCoords % 2 != 0) {
-                    std::cout << "odd numCoords @ " << block.offset << std::endl;
-                    exit(1);
-                }
                 update.setv("entityId", stream.read<uint32_t>());
+
+                if(numCoords % 2) {
+                    stream.ignore(1);
+                    numCoords--;
+                }
 
                 std::vector<uint8_t> bitmask; // defines if a coord is relative for non-start coords
                 if(numCoords > 2) {
