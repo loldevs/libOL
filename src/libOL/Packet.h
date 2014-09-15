@@ -9,6 +9,10 @@
 
 namespace libol {
     struct Packet {
+        ~Packet() {
+            data.destroy();
+        };
+
         float timestamp;
         uint8_t type;
         uint32_t entityId;
