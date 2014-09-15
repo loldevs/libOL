@@ -20,7 +20,7 @@ public:
         ARRAY, // Array
         STRING, // std::string
         INTEGER, // int32_t
-        // TODO: what to do with larger ints?
+        LARGE_INTEGER, // int64_t
         FLOAT, // float
         BOOL // bool
     } type;
@@ -45,9 +45,11 @@ public:
     static Value create(Array& val);
     static Value create(std::string& val);
     static Value create(const char*& val);
+    static Value create(uint64_t& val);
     static Value create(uint32_t& val);
     static Value create(uint16_t& val);
     static Value create(uint8_t& val);
+    static Value create(int64_t& val);
     static Value create(int32_t& val);
     static Value create(int16_t& val);
     static Value create(int8_t& val);

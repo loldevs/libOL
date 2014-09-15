@@ -1,6 +1,7 @@
 #include "Value.h"
 
 #include <sstream>
+#include <cassert>
 
 Value Value::create(Object& val) {
     Value value;
@@ -30,7 +31,16 @@ Value Value::create(bool& val) {
     return value;
 }
 
+Value Value::create(uint64_t& val) {
+    assert(!(val & ((uint64_t) 1 << 61))); // assert that the msb is not set
+    return create((int64_t&) val);
+}
+
 Value Value::create(uint32_t& val) {
+    if(val >= 2147483648) {
+        int64_t large = (int64_t) val;
+        return create(large);
+    }
     return create((int32_t&) val);
 }
 
@@ -44,6 +54,20 @@ Value Value::create(uint8_t& val) {
     return create(intval);
 }
 
+Value Value::create(int64_t& val) {
+    Value value;
+    value.type = LARGE_INTEGER;
+    value.value = new int64_t(val);
+    return value;
+}
+
+Value Value::create(int32_t& val) {
+    Value value;
+    value.type = INTEGER;
+    value.value = new int32_t(val);
+    return value;
+}
+
 Value Value::create(int16_t& val) {
     int32_t intval = (int32_t)val;
     return create(intval);
@@ -52,13 +76,6 @@ Value Value::create(int16_t& val) {
 Value Value::create(int8_t& val) {
     int32_t intval = (int32_t) val;
     return create(intval);
-}
-
-Value Value::create(int32_t& val) {
-    Value value;
-    value.type = INTEGER;
-    value.value = new int32_t(val);
-    return value;
 }
 
 Value Value::create(std::string& val) {
@@ -105,6 +122,9 @@ std::string Value::toString() {
             break;
         case INTEGER:
             result << this->as<int32_t>();
+            break;
+        case LARGE_INTEGER:
+            result << this->as<int64_t>();
             break;
         case FLOAT:
             result << this->as<float>();
