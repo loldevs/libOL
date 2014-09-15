@@ -256,7 +256,7 @@ namespace libol {
                     hasJungleStats = true;
                     break;
                 default:
-                    assert(false); // TODO
+                    assert(false); // TODO: proper error handling
             }
 
             Object data = Object();
@@ -456,7 +456,7 @@ namespace libol {
 
             auto stream = block.createStream();
 
-            data.setv("type", stream.read<uint8_t>());
+            data.setv("type", stream.read<uint8_t>()); // TODO: find out enum
 
             return Value::create(data);
         }
@@ -477,7 +477,7 @@ namespace libol {
 
             auto stream = block.createStream();
 
-            data.setv("type", stream.read<uint8_t>());
+            data.setv("type", stream.read<uint8_t>()); // TODO: find out enum
             data.setv("receiverEntId", stream.read<uint32_t>());
             data.setv("sourceEntId", stream.read<uint32_t>());
             data.setv("amount", stream.read<float>());
@@ -519,7 +519,7 @@ namespace libol {
         }
 
         static Value decode(Block& block) {
-            if(block.size == 0x2) { // TODO
+            if(block.size == 0x2) { // TODO: understand this
                 std::string unk = "???";
                 return Value::create(unk);
             }
