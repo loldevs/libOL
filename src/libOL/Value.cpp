@@ -100,7 +100,9 @@ namespace libol {
         switch (type) {
             case OBJECT: {
                 Object &obj = this->as<Object>();
-                result << "{" << std::endl;
+                result << "{";
+                if(obj.size())
+                    result << std::endl;
                 for (auto it = obj.begin(); it != obj.end();) {
                     result << indentation << "\t\"" << it->first << "\": ";
                     result << it->second.toString(indent + 1);
