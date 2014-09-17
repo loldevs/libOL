@@ -52,6 +52,19 @@ namespace libol {
             return result;
         }
 
+        std::vector<Block> readBlocksFromBuffer(uint8_t* data, size_t len) {
+            std::vector<Block> result;
+
+            size_t pos = 0;
+
+            while (pos < len - 1) {
+                Block block = Block::decode(data, pos, len);
+                processBlock(block);
+                result.push_back(block);
+            }
+
+            return result;
+        }
     };
 }
 

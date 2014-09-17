@@ -91,6 +91,7 @@ namespace libol {
         Stream createStream(size_t offset = 0);
 
         static Block decode(std::ifstream& ifs);
+        static Block decode(uint8_t* buf, size_t& pos, size_t len);
     };
 }
 
