@@ -5,6 +5,7 @@
 #define __libol__Packet__
 
 #include "Value.h"
+#include "Block.h"
 #include <string>
 
 namespace libol {
@@ -20,6 +21,8 @@ namespace libol {
         bool isDecoded;
         std::string typeName;
         Value data;
+
+        static Packet decode(Block& block);
     };
 }
 

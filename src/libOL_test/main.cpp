@@ -11,7 +11,7 @@
 #include <libOL/Chunks.h>
 #include <libOL/Rofl.h>
 #include <libOL/BlockReader.h>
-#include <libOL/PacketParser.h>
+#include <libOL/Packet.h>
 
 #define MAX_ARGUMENT_LENGTH 600
 
@@ -52,10 +52,8 @@ int test_packets(std::vector<std::string> arguments)
     libol::BlockReader reader;
     auto blocks = reader.readBlocksFromStream(ifs);
 
-    libol::PacketParser parser;
-
     for(auto block : blocks) {
-        libol::Packet pkt = parser.decode(block);
+        libol::Packet pkt = libol::Packet::decode(block);
         if(pkt.isDecoded) {
             std::cout << pkt.typeName << ": " << pkt.data.toString() << std::endl;
         }

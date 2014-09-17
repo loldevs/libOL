@@ -24,9 +24,9 @@ set(LIBOL_SOURCES
   src/libOL/Header.cpp
   src/libOL/PayloadHeader.cpp
   src/libOL/Rofl.cpp
-  #src/libOL/Keyframe.cpp
   src/libOL/Block.cpp
   src/libOL/Value.cpp
+  src/libOL/Packet.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")

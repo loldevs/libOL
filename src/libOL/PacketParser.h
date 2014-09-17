@@ -13,6 +13,8 @@
 
 namespace libol {
     class PacketParser {
+        friend struct Packet;
+
         struct PacketDecoder {
             std::function< std::string () > getName;
             std::function< bool (Block&) > test;
@@ -20,7 +22,11 @@ namespace libol {
         };
         std::vector< PacketDecoder > decoders;
 
-    public:
+        template<class PACKET>
+        void registerPacket() {
+            decoders.push_back(PacketDecoder({PACKET::name, PACKET::test, PACKET::decode}));
+        };
+
         PacketParser() {
             registerPacket<SetAbilityLevelPkt>();
             registerPacket<ExpGainPkt>();
@@ -38,11 +44,6 @@ namespace libol {
             registerPacket<SetDeathTimerPkt>();
             registerPacket<SetHealthPkt>();
         }
-
-        template<class PACKET>
-        void registerPacket() {
-            decoders.push_back(PacketDecoder({PACKET::name, PACKET::test, PACKET::decode}));
-        };
 
         Packet decode(Block& block) {
             Packet packet;
@@ -64,6 +65,10 @@ namespace libol {
             return packet;
         }
 
+        static PacketParser& getInstance() {
+            static PacketParser instance;
+            return instance;
+        }
     };
 }
 
