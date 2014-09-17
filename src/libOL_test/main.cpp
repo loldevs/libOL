@@ -12,62 +12,8 @@
 #include <libOL/Rofl.h>
 #include <libOL/BlockReader.h>
 #include <libOL/PacketParser.h>
-#include <Python/Python.h>
-// #include <libOL/Keyframe.h>
 
 #define MAX_ARGUMENT_LENGTH 600
-
-int test_keyframe(std::vector<std::string> arguments)
-{
-    assert(arguments.size() == 1);
-
-    std::ifstream ifs(arguments.at(0), std::ios::binary);
-    if (!ifs) {
-        std::cerr << "Failed to open " << arguments.at(0) << ": " << strerror(errno) << std::endl;
-        return 2;
-    }
-
-    /*auto blocks = libol::Block::readBlocksFromStream(ifs);
-    libol::Keyframe frame(blocks);
-
-    std::cout << "Time: " << frame.header.timestamp << "s" << std::endl;
-
-    for(auto& player : frame.players) {
-        std::cout << player.summoner.name << "[" << (unsigned) player.summoner.level << "] as " << player.champion << std::endl;
-        std::cout << player.stats.kills << "/" << player.stats.deaths << "/" << player.stats.assists << std::endl;
-
-        std::cout << "Runes: ";
-        for(auto& rune : player.summoner.runes) {
-            std::cout << rune << " ";
-        }
-        std::cout << std::endl;
-
-        int count = 0;
-        for(auto& mastery : player.summoner.masteries) {
-            count += mastery.pointsSpent;
-        }
-        std::cout << count << " mastery points spent" << std::endl;
-
-        std::cout << "Items: " << std::endl;
-        for(auto& item : player.items) {
-            std::cout << (unsigned) item.quantity << " * " << item.itemId << " with "
-                << (unsigned) item.charges << " charges and cooldown of " << item.cooldown << "/" << item.baseCooldown << std::endl;
-        }
-
-        std::cout << "Abilities: " << std::endl;
-        for(auto& ability : player.abilities) {
-            std::cout << (unsigned) ability.abilityId << ": Level " << (unsigned) ability.level << std::endl;
-        }
-    }
-
-    for(auto& turret : frame.turrets) {
-        std::cout << "Turret: " << turret.name << std::endl;
-        std::cout << "IsFountainLaser: " << turret.isFountainLaser << std::endl;
-        std::cout << "IsAttackable: " << turret.isAttackable << std::endl;
-    }*/
-
-    return 0;
-}
 
 int test_blocks(std::vector<std::string> arguments)
 {
@@ -138,7 +84,7 @@ int test_rofl(std::vector<std::string> arguments)
 }
 
 int usage(std::string prog_name) {
-    std::cerr << prog_name << " [rofl|keyframe|blocks|packets] <rofl/keyframe/blocks/packets file>" << std::endl;
+    std::cerr << prog_name << " [rofl|blocks|packets] <rofl/blocks/packets file>" << std::endl;
     return 1;
 }
 
@@ -160,8 +106,6 @@ int main(int argc, const char * argv[])
 
     if (command == "rofl") {
         return test_rofl(arguments);
-    } else if (command == "keyframe") {
-        return test_keyframe(arguments);
     } else if (command == "blocks") {
         return test_blocks(arguments);
     } else if (command == "packets") {
