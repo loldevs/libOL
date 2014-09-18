@@ -26,6 +26,7 @@ namespace libol {
             DamageDone = 0x65,
             ItemPurchase = 0x6F,
             TurretSpawn = 0x9D,
+            SetItemStacks = 0x9F,
             SetHealth = 0xAE,
             AttributeGroup = 0xC4,
             SetTeam = 0xE0,

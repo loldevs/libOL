@@ -564,6 +564,25 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class SetItemStacksPkt {
+    public:
+        static const PacketType::Id type = PacketType::SetItemStacks;
+        static std::string name() { return "SetItemStacks"; }
+
+        static Value decode(Block& block) {
+            assert(block.size == 0x3);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("slotId", stream.get());
+            data.setv("quantity", stream.read<uint16_t>());
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */

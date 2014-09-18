@@ -46,6 +46,7 @@ namespace libol {
             registerPacket<SetHealthPkt>();
             registerPacket<AttributeGroupPkt>();
             registerPacket<SetTeamPkt>();
+            registerPacket<SetItemStacksPkt>();
         }
 
         Packet decode(Block& block) {
