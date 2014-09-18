@@ -101,13 +101,13 @@ namespace libol {
     struct Team {
         enum : uint8_t {
             Blue,
-            Red
+            Purple
         };
 
         static std::string getName(uint8_t id) {
             switch(id) {
                 case Blue: return "Blue";
-                case Red: return "Red";
+                case Purple: return "Purple";
                 default: return "UnknownTeam";
             }
         }
