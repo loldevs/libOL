@@ -25,6 +25,7 @@ namespace libol {
             ItemPurchase = 0x6F,
             TurretSpawn = 0x9D,
             SetHealth = 0xAE,
+            AttributeGroup = 0xC4,
             GoldGain = 0xE4
         };
     };

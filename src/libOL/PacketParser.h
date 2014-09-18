@@ -43,6 +43,7 @@ namespace libol {
             registerPacket<DamageDonePkt>();
             registerPacket<SetDeathTimerPkt>();
             registerPacket<SetHealthPkt>();
+            registerPacket<AttributeGroupPkt>();
         }
 
         Packet decode(Block& block) {

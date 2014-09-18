@@ -7,6 +7,7 @@
 #include "Value.h"
 #include "Block.h"
 #include "Constants.h"
+#include "EntityAttribute.h"
 
 #include <cstdint>
 #include <cassert>
@@ -534,6 +535,59 @@ namespace libol {
             stream.ignore(2);
             data.setv("maxHealth", stream.read<float>());
             data.setv("currentHealth", stream.read<float>());
+
+            return Value::create(data);
+        }
+    };
+
+    class AttributeGroupPkt {
+    public:
+        static std::string name() { return "AttributeGroup"; }
+
+        static bool test(Block& block) {
+            return block.type == PacketType::AttributeGroup;
+        }
+
+        static Value decode(Block& block) {
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("timestamp", stream.read<uint32_t>()); // in ms from start
+            uint8_t numUpdates = stream.read<uint8_t>();
+
+            Array updates = Array();
+            while(numUpdates--) {
+                Object update = Object();
+
+                uint8_t groupMask = stream.get(); // defines which groups of attributes will follow
+                update.setv("entityId", stream.read<uint32_t>());
+
+                Object attr = Object();
+                for(uint8_t groupBit = 0; groupBit < 8; groupBit++) {
+                    if(!(groupMask & (1 << groupBit))) continue;
+
+                    uint32_t attrMask = stream.read<uint32_t>(); // defines which attributes from this group will follow
+
+                    uint8_t groupSize = stream.get();
+                    size_t groupStart = stream.tellg();
+
+                    for(uint8_t attrBit = 0; attrBit < 32; attrBit++) {
+                        if(!(attrMask & (1 << attrBit))) continue;
+
+                        if(!EntityAttribute::read(&attr, stream, groupBit, attrBit)) {
+                            stream.seekg(groupStart + groupSize);
+                            break;
+                        }
+                    }
+                    if(stream.tellg() != groupStart + groupSize) // TODO: investigate
+                        stream.seekg(groupStart + groupSize);
+                }
+                update.setv("attributes", attr);
+
+                updates.pushv(update);
+            }
+            data.setv("updates", updates);
 
             return Value::create(data);
         }
