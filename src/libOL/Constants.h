@@ -25,6 +25,7 @@ namespace libol {
             StartSpawn,
             DamageDone = 0x65,
             ItemPurchase = 0x6F,
+            SummonerDisconnect = 0x98,
             TurretSpawn = 0x9D,
             SetItemStacks = 0x9F,
             SetHealth = 0xAE,

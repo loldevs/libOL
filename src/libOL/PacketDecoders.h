@@ -583,6 +583,25 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class SummonerDisconnectPkt {
+    public:
+        static const PacketType::Id type = PacketType::SummonerDisconnect;
+        static std::string name() { return "SummonerDisconnect"; }
+
+        static Value decode(Block& block) {
+            assert(block.size == 0x5);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("entityId", stream.read<uint32_t>());
+            stream.ignore(1); // unknown
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */

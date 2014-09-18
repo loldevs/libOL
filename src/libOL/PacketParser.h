@@ -47,6 +47,7 @@ namespace libol {
             registerPacket<AttributeGroupPkt>();
             registerPacket<SetTeamPkt>();
             registerPacket<SetItemStacksPkt>();
+            registerPacket<SummonerDisconnectPkt>();
         }
 
         Packet decode(Block& block) {
