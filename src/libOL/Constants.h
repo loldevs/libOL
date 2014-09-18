@@ -8,7 +8,9 @@
 
 namespace libol {
     struct PacketType {
-        enum : uint8_t {
+        typedef uint16_t Id;
+
+        enum : Id {
             SetOwnership = 0x07,
             EndSpawn = 0x11,
             SetAbilityLevel = 0x15,
@@ -26,7 +28,9 @@ namespace libol {
             TurretSpawn = 0x9D,
             SetHealth = 0xAE,
             AttributeGroup = 0xC4,
-            GoldGain = 0xE4
+            GoldGain = 0xE4,
+            ExtendedType = 0xFE,
+            SetInventory = 0x10C
         };
     };
 

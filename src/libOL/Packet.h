@@ -5,6 +5,7 @@
 #define __libol__Packet__
 
 #include "Value.h"
+#include "Constants.h"
 #include "Block.h"
 #include <string>
 
@@ -15,7 +16,7 @@ namespace libol {
         };
 
         float timestamp;
-        uint8_t type;
+        PacketType::Id type;
         uint32_t entityId;
 
         bool isDecoded;

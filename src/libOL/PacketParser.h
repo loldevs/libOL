@@ -8,7 +8,7 @@
 #include "Packet.h"
 #include "PacketDecoders.h"
 
-#include <vector>
+#include <map>
 #include <fstream>
 
 namespace libol {
@@ -17,14 +17,15 @@ namespace libol {
 
         struct PacketDecoder {
             std::function< std::string () > getName;
-            std::function< bool (Block&) > test;
             std::function< Value (Block&) > decode;
         };
-        std::vector< PacketDecoder > decoders;
+
+        std::map<PacketType::Id, PacketDecoder > decoders;
 
         template<class PACKET>
         void registerPacket() {
-            decoders.push_back(PacketDecoder({PACKET::name, PACKET::test, PACKET::decode}));
+            PacketType::Id type = PACKET::type;
+            decoders[type] = PacketDecoder({PACKET::name, PACKET::decode});
         };
 
         PacketParser() {
@@ -50,17 +51,20 @@ namespace libol {
             Packet packet;
 
             packet.timestamp = block.time;
-            packet.type = block.type;
+            if(block.type == PacketType::ExtendedType) {
+                uint16_t realType;
+                block.read(&realType, 0);
+                packet.type = realType;
+            } else
+                packet.type = block.type;
             packet.entityId = block.entityId;
 
             packet.isDecoded = false;
-            for(auto& decoder : decoders) {
-                if(decoder.test(block)) {
-                    packet.isDecoded = true;
-                    packet.typeName = decoder.getName();
-                    packet.data = decoder.decode(block);
-                    break;
-                }
+            if(decoders.count(packet.type)) {
+                auto& decoder = decoders[packet.type];
+                packet.data = decoder.decode(block);
+                packet.typeName = decoder.getName();
+                packet.isDecoded = true;
             }
 
             return packet;

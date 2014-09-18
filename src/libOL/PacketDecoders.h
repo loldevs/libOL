@@ -17,11 +17,8 @@
 namespace libol {
     class SetAbilityLevelPkt {
     public:
+        static const PacketType::Id type = PacketType::SetAbilityLevel;
         static std::string name() { return "SetAbilityLevel"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::SetAbilityLevel;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x3);
@@ -39,11 +36,8 @@ namespace libol {
 
     class ExpGainPkt {
     public:
+        static const PacketType::Id type = PacketType::ExpGain;
         static std::string name() { return "ExpGain"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::ExpGain;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0xc);
@@ -62,11 +56,8 @@ namespace libol {
 
     class GoldGainPkt {
     public:
+        static const PacketType::Id type = PacketType::GoldGain;
         static std::string name() { return "GoldGain"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::GoldGain;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x8);
@@ -84,11 +75,8 @@ namespace libol {
 
     class SetInventoryPkt {
     public:
+        static const PacketType::Id type = PacketType::SetInventory;
         static std::string name() { return "SetInventory"; }
-
-        static bool test(Block& block) {
-            return block.type == 0xFE && block.content[0] == 0x0C && block.content[1] == 0x01;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x98);
@@ -124,11 +112,8 @@ namespace libol {
 
     class ItemPurchasePkt {
     public:
+        static const PacketType::Id type = PacketType::ItemPurchase;
         static std::string name() { return "ItemPurchase"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::ItemPurchase;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x8);
@@ -149,11 +134,8 @@ namespace libol {
 
     class HeroSpawnPkt {
     public:
+        static const PacketType::Id type = PacketType::HeroSpawn;
         static std::string name() { return "HeroSpawn"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::HeroSpawn;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0xC3);
@@ -187,11 +169,8 @@ namespace libol {
 
     class SummonerDataPkt {
     public:
+        static const PacketType::Id type = PacketType::SummonerData;
         static std::string name() { return "SummonerData"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::SummonerData;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x212);
@@ -242,11 +221,8 @@ namespace libol {
 
     class PlayerStatsPkt {
     public:
+        static const PacketType::Id type = PacketType::PlayerStats;
         static std::string name() { return "PlayerStats"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::PlayerStats;
-        }
 
         static Value decode(Block& block) {
             bool hasJungleStats;
@@ -327,11 +303,8 @@ namespace libol {
 
     class MovementGroupPkt {
     public:
+        static const PacketType::Id type = PacketType::MovementGroup;
         static std::string name() { return "MovementGroup"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::MovementGroup;
-        }
 
         static Value decode(Block& block) {
             Object data = Object();
@@ -396,11 +369,8 @@ namespace libol {
 
     class SetOwnershipPkt {
     public:
+        static const PacketType::Id type = PacketType::SetOwnership;
         static std::string name() { return "SetOwnership"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::SetOwnership;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x4);
@@ -417,11 +387,8 @@ namespace libol {
 
     class AttentionPingPkt {
     public:
+        static const PacketType::Id type = PacketType::AttentionPing;
         static std::string name() { return "AttentionPing"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::AttentionPing;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x11);
@@ -445,11 +412,8 @@ namespace libol {
 
     class PlayEmotePkt {
     public:
+        static const PacketType::Id type = PacketType::PlayEmote;
         static std::string name() { return "PlayEmote"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::PlayEmote;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x1);
@@ -466,11 +430,8 @@ namespace libol {
 
     class DamageDonePkt {
     public:
+        static const PacketType::Id type = PacketType::DamageDone;
         static std::string name() { return "DamageDone"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::DamageDone;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0xd);
@@ -490,11 +451,8 @@ namespace libol {
 
     class SetDeathTimerPkt {
     public:
+        static const PacketType::Id type = PacketType::SetDeathTimer;
         static std::string name() { return "SetDeathTimer"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::SetDeathTimer;
-        }
 
         static Value decode(Block& block) {
             assert(block.size == 0x12);
@@ -514,11 +472,8 @@ namespace libol {
 
     class SetHealthPkt {
     public:
+        static const PacketType::Id type = PacketType::SetHealth;
         static std::string name() { return "SetHealth"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::SetHealth;
-        }
 
         static Value decode(Block& block) {
             if(block.size == 0x2) { // TODO: understand this
@@ -542,11 +497,8 @@ namespace libol {
 
     class AttributeGroupPkt {
     public:
+        static const PacketType::Id type = PacketType::AttributeGroup;
         static std::string name() { return "AttributeGroup"; }
-
-        static bool test(Block& block) {
-            return block.type == PacketType::AttributeGroup;
-        }
 
         static Value decode(Block& block) {
             Object data = Object();
