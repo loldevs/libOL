@@ -544,6 +544,26 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class SetTeamPkt {
+    public:
+        static const PacketType::Id type = PacketType::SetTeam;
+        static std::string name() { return "SetTeam"; }
+
+        static Value decode(Block& block) {
+            assert(block.size == 0x1);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            uint8_t teamId = stream.get();
+            data.setv("team", teamId);
+            data.setv("teamName", Team::getName(teamId));
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */

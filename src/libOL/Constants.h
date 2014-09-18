@@ -28,6 +28,7 @@ namespace libol {
             TurretSpawn = 0x9D,
             SetHealth = 0xAE,
             AttributeGroup = 0xC4,
+            SetTeam = 0xE0,
             GoldGain = 0xE4,
             ExtendedType = 0xFE,
             SetInventory = 0x10C
@@ -92,6 +93,21 @@ namespace libol {
                 case Retreat: return "Retreat";
                 case AssistanceNeeded: return "AssistanceNeeded";
                 default: return "UnknownPingType";
+            }
+        }
+    };
+
+    struct Team {
+        enum : uint8_t {
+            Blue,
+            Red
+        };
+
+        static std::string getName(uint8_t id) {
+            switch(id) {
+                case Blue: return "Blue";
+                case Red: return "Red";
+                default: return "UnknownTeam";
             }
         }
     };
