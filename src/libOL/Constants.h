@@ -1,8 +1,8 @@
 // Copyright (c) 2014 Andrew Toulouse.
 // Distributed under the MIT License.
 
-#ifndef __libol__PacketTypes__
-#define __libol__PacketTypes__
+#ifndef __libol__Constants__
+#define __libol__Constants__
 
 #include <cstdint>
 
@@ -115,4 +115,4 @@ namespace libol {
     };
 }
 
-#endif /* defined(__libol__PacketTypes__) */
+#endif /* defined(__libol__Constants__) */

@@ -1,8 +1,8 @@
 // Copyright (c) 2014 Andrew Toulouse.
 // Distributed under the MIT License.
 
-#ifndef __libol__File__
-#define __libol__File__
+#ifndef __libol__Rofl__
+#define __libol__Rofl__
 
 #include <cstdint>
 #include <iostream>
@@ -31,4 +31,4 @@ namespace libol {
     };
 }
 
-#endif /* defined(__libol__File__) */
+#endif /* defined(__libol__Rofl__) */
