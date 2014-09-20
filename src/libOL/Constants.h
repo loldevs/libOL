@@ -113,6 +113,18 @@ namespace libol {
             }
         }
     };
+
+    struct Channel {
+        enum : uint8_t {
+            Handshake = 0,
+            C2S = 1,
+            Gameplay =2,
+            S2C = 3,
+            LowPriority = 4,
+            Communication = 5,
+            LoadingScreen = 7,
+        };
+    };
 }
 
 #endif /* defined(__libol__Constants__) */

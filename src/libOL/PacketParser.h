@@ -63,7 +63,7 @@ namespace libol {
             packet.entityId = block.entityId;
 
             packet.isDecoded = false;
-            if(decoders.count(packet.type)) {
+            if(block.channel != Channel::LoadingScreen && decoders.count(packet.type)) {
                 auto& decoder = decoders[packet.type];
                 try {
                     packet.data = decoder.decode(block);

@@ -37,6 +37,7 @@ namespace libol {
 
         BlockHeader header;
 
+        uint8_t channel;
         float time;
         uint8_t type;
         uint32_t entityId; // (?)

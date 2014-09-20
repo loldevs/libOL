@@ -24,6 +24,8 @@ namespace libol {
 
         block.header.marker = ifs.get();
 
+        block.channel = block.header.marker & 0xf;
+
         // Bit 1: Time format
         block.header.timeIsAbs = !get_bit(block.header.marker, 0);
         if(block.header.timeIsAbs) {
