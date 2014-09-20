@@ -3,6 +3,8 @@
 
 #include "Chunks.h"
 
+#include <stdexcept>
+
 extern "C" {
 #include <zlib.h>
 }
@@ -24,9 +26,8 @@ namespace libol {
             stream.zalloc = Z_NULL;
             stream.zfree = Z_NULL;  
 
-            // TODO: handle errors better
             if (inflateInit2(&stream, (16 + MAX_WBITS)) != Z_OK) {
-                return std::vector<uint8_t> {};
+                throw std::runtime_error("zlib: inflateInit2 not Z_OK");
             }
 
             bool done = false;
@@ -43,14 +44,12 @@ namespace libol {
                 if (err == Z_STREAM_END) {
                     done = true;
                 } else if (err != Z_OK)  {
-                    // TODO: handle errors better
-                    break;
+                    throw std::runtime_error("zlib: inflate not Z_OK");
                 }
             }
 
             if (inflateEnd(&stream) != Z_OK) {
-                // TODO: handle errors better
-                return std::vector<uint8_t> {};
+                throw std::runtime_error("zlib: inflateEnd not Z_OK");
             }  
 
             decompressed.resize(stream.total_out);

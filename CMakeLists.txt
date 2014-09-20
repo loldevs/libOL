@@ -27,6 +27,7 @@ set(LIBOL_SOURCES
   src/libOL/Block.cpp
   src/libOL/Value.cpp
   src/libOL/Packet.cpp
+  src/libOL/ParseException.cpp
 )
 
 if(CMAKE_GENERATOR MATCHES "Xcode")

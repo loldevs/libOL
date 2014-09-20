@@ -8,9 +8,9 @@
 #include "Block.h"
 #include "Constants.h"
 #include "EntityAttribute.h"
+#include "ParseException.h"
 
 #include <cstdint>
-#include <cassert>
 #include <cmath>
 #include <array>
 
@@ -21,7 +21,7 @@ namespace libol {
         static std::string name() { return "SetAbilityLevel"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x3);
+            REQUIRE(block.size == 0x3);
 
             Object data = Object();
 
@@ -40,7 +40,7 @@ namespace libol {
         static std::string name() { return "ExpGain"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0xc);
+            REQUIRE(block.size == 0xc);
 
             Object data = Object();
 
@@ -60,7 +60,7 @@ namespace libol {
         static std::string name() { return "GoldGain"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x8);
+            REQUIRE(block.size == 0x8);
 
             Object data = Object();
 
@@ -79,7 +79,7 @@ namespace libol {
         static std::string name() { return "SetInventory"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x98);
+            REQUIRE(block.size == 0x98);
 
             Object data = Object();
             std::array<Object, 10> items;
@@ -116,7 +116,7 @@ namespace libol {
         static std::string name() { return "ItemPurchase"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x8);
+            REQUIRE(block.size == 0x8);
 
             Object data = Object();
 
@@ -138,7 +138,7 @@ namespace libol {
         static std::string name() { return "HeroSpawn"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0xC3);
+            REQUIRE(block.size == 0xC3);
 
             Object data = Object();
 
@@ -173,7 +173,7 @@ namespace libol {
         static std::string name() { return "SummonerData"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x212);
+            REQUIRE(block.size == 0x212);
 
             Object data = Object();
 
@@ -205,9 +205,9 @@ namespace libol {
                 entry.setv("id", stream.get());
                 entry.setv("tree", stream.get());
                 uint8_t byte = stream.get();
-                assert(byte == 0x03);
+                EXPECT(byte == 0x03);
                 byte = stream.get();
-                assert(byte == 0x00);
+                EXPECT(byte == 0x00);
                 entry.setv("pointsSpent", stream.get());
                 masteries.pushv(entry);
             }
@@ -234,7 +234,7 @@ namespace libol {
                     hasJungleStats = true;
                     break;
                 default:
-                    assert(false); // TODO: proper error handling
+                    throw ParseException("PlayerStats: unknown size " + std::to_string(block.size));
             }
 
             Object data = Object();
@@ -373,7 +373,7 @@ namespace libol {
         static std::string name() { return "SetOwnership"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x4);
+            REQUIRE(block.size == 0x4);
 
             Object data = Object();
 
@@ -391,7 +391,7 @@ namespace libol {
         static std::string name() { return "AttentionPing"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x11);
+            REQUIRE(block.size == 0x11);
 
             Object data = Object();
 
@@ -416,7 +416,7 @@ namespace libol {
         static std::string name() { return "PlayEmote"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x1);
+            REQUIRE(block.size == 0x1);
 
             Object data = Object();
 
@@ -434,7 +434,7 @@ namespace libol {
         static std::string name() { return "DamageDone"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0xd);
+            REQUIRE(block.size == 0xd);
 
             Object data = Object();
 
@@ -455,7 +455,7 @@ namespace libol {
         static std::string name() { return "SetDeathTimer"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x12);
+            REQUIRE(block.size == 0x12);
 
             Object data = Object();
 
@@ -477,11 +477,10 @@ namespace libol {
 
         static Value decode(Block& block) {
             if(block.size == 0x2) { // TODO: understand this
-                std::string unk = "???";
-                return Value::create(unk);
+                throw new ParseException("SetHealth: size is only 2 bytes");
             }
 
-            assert(block.size == 0xa);
+            REQUIRE(block.size == 0xa);
 
             Object data = Object();
 
@@ -551,7 +550,7 @@ namespace libol {
         static std::string name() { return "SetTeam"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x1);
+            REQUIRE(block.size == 0x1);
 
             Object data = Object();
 
@@ -571,7 +570,7 @@ namespace libol {
         static std::string name() { return "SetItemStacks"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x3);
+            REQUIRE(block.size == 0x3);
 
             Object data = Object();
 
@@ -590,7 +589,7 @@ namespace libol {
         static std::string name() { return "SummonerDisconnect"; }
 
         static Value decode(Block& block) {
-            assert(block.size == 0x5);
+            REQUIRE(block.size == 0x5);
 
             Object data = Object();
 

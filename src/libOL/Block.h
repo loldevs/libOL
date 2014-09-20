@@ -4,8 +4,9 @@
 #ifndef __libol__Block__
 #define __libol__Block__
 
+#include "ParseException.h"
+
 #include <cstdint>
-#include <cassert>
 #include <iostream>
 #include <vector>
 #include <cstring>
@@ -45,13 +46,13 @@ namespace libol {
 
         template<class T>
         void read(T* dest, size_t offset) {
-            assert(offset + sizeof(T) <= this->size);
+            REQUIRE(offset + sizeof(T) <= this->size);
             memcpy(dest, this->content.data() + offset, sizeof(T));
         }
         template<class T>
         void read(T* dest, size_t offset, size_t count) {
             size_t length = count * sizeof(T);
-            assert(offset + length <= this->size);
+            REQUIRE(offset + length <= this->size);
             memcpy(dest, this->content.data() + offset, length);
         }
 

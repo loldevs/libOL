@@ -65,9 +65,14 @@ namespace libol {
             packet.isDecoded = false;
             if(decoders.count(packet.type)) {
                 auto& decoder = decoders[packet.type];
-                packet.data = decoder.decode(block);
-                packet.typeName = decoder.getName();
-                packet.isDecoded = true;
+                try {
+                    packet.data = decoder.decode(block);
+                    packet.typeName = decoder.getName();
+                    packet.isDecoded = true;
+                } catch(ParseException& ex) {
+                    packet.isDecoded = false;
+                    throw;
+                }
             }
 
             return packet;

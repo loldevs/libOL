@@ -1,7 +1,7 @@
 #include "Value.h"
 
 #include <sstream>
-#include <cassert>
+#include <stdexcept>
 
 namespace libol {
     Value Value::create(Object &val) {
@@ -33,7 +33,8 @@ namespace libol {
     }
 
     Value Value::create(uint64_t &val) {
-        assert(!(val & ((uint64_t) 1 << 61))); // assert that the msb is not set
+        if(val & ((uint64_t) 1 << 61))
+            throw std::overflow_error("Value: val too big for LARGE_INTEGER");
         return create((int64_t &) val);
     }
 
