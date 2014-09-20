@@ -14,7 +14,7 @@ namespace libol {
             SetOwnership = 0x07,
             EndSpawn = 0x11,
             SetAbilityLevel = 0x15,
-            ExpGain = 0x22,
+            GoldReward = 0x22,
             SummonerData = 0x2A,
             AttentionPing = 0x40,
             PlayEmote = 0x42,

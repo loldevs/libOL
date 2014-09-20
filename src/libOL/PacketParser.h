@@ -30,7 +30,7 @@ namespace libol {
 
         PacketParser() {
             registerPacket<SetAbilityLevelPkt>();
-            registerPacket<ExpGainPkt>();
+            registerPacket<GoldRewardPkt>();
             registerPacket<GoldGainPkt>();
             registerPacket<SetInventoryPkt>();
             registerPacket<ItemPurchasePkt>();

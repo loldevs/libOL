@@ -34,10 +34,10 @@ namespace libol {
         }
     };
 
-    class ExpGainPkt {
+    class GoldRewardPkt {
     public:
-        static const PacketType::Id type = PacketType::ExpGain;
-        static std::string name() { return "ExpGain"; }
+        static const PacketType::Id type = PacketType::GoldReward;
+        static std::string name() { return "GoldReward"; }
 
         static Value decode(Block& block) {
             REQUIRE(block.size == 0xc);
@@ -46,7 +46,7 @@ namespace libol {
 
             auto stream = block.createStream();
 
-            data.setv("receiverEnt", stream.read<uint32_t>());
+            data.setv("killerEnt", stream.read<uint32_t>());
             data.setv("killedEnt", stream.read<uint32_t>());
             data.setv("amount", stream.read<float>());
 
