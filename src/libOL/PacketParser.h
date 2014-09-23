@@ -26,7 +26,7 @@ namespace libol {
         void registerPacket() {
             PacketType::Id type = PACKET::type;
             decoders[type] = PacketDecoder({PACKET::name, PACKET::decode});
-        };
+        }
 
         PacketParser() {
             registerPacket<SetAbilityLevelPkt>();

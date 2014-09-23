@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <map>
 #include <string>
+#include <functional>
 
 namespace libol {
     class EntityAttribute {

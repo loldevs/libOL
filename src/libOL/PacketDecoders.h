@@ -341,7 +341,7 @@ namespace libol {
                 update.setv("position", start);
 
                 Array waypoints = Array();
-                for(size_t i = 0; i < numCoords - 2; i++) {
+                for(size_t i = 0; i < (size_t)(numCoords - 2); i++) {
                     Object point = Object();
 
                     if(bitmask[floor(i  / 8.f)] & (1 << i % 8))
