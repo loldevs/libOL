@@ -59,6 +59,12 @@ namespace libol {
             // Group 4
             defineAttribute<float>(4, 1, "CurrentHealth");
             defineAttribute<float>(4, 2, "CurrentMana");
+            defineAttribute<float>(4, 3, "MaxHealth");
+            defineAttribute<float>(4, 4, "MaxMana");
+            defineAttribute<float>(4, 5, "Experience");
+            defineAttribute<float>(4, 10, "VisionRange");
+            defineAttribute<float>(4, 11, "MovementSpeed");
+            defineAttribute<float>(4, 12, "ModelSize");
             defineAttribute<uint8_t>(4, 15, "Level");
         }
     public:
