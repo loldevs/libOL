@@ -30,7 +30,7 @@ namespace libol {
     namespace ParseExceptionUtil {
         void require(bool result, const char* expr, const char* file, int line);
         void expect(bool result, const char* expr, const char* file, int line);
-    };
+    }
 }
 
 #endif /* defined(__libol__ParseException__) */

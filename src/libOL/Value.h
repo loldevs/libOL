@@ -97,7 +97,7 @@ namespace libol {
         template<class T>
         void pushv(T value) {
             push(Value::create(value));
-        };
+        }
 
         void push(Value value);
 
