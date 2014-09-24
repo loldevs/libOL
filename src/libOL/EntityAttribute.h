@@ -73,7 +73,12 @@ namespace libol {
             AttrId id {groupBit + 1, attrBit + 1};
 
             if(!reader.attributes.count(id)) return false;
-            reader.attributes[id](*obj, stream);
+            try {
+                reader.attributes[id](*obj, stream);
+            } catch(...) {
+                // TODO: investigate, minions have different mask?
+                return false;
+            }
             return true;
         }
     };
