@@ -49,6 +49,7 @@ namespace libol {
             registerPacket<SetItemStacksPkt>();
             registerPacket<SummonerDisconnectPkt>();
             registerPacket<SetLevelPkt>();
+            registerPacket<ChampionRespawnPkt>();
         }
 
         Packet decode(Block& block) {

@@ -620,6 +620,26 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class ChampionRespawnPkt {
+    public:
+        static const PacketType::Id type = PacketType::ChampionRespawn;
+        static std::string name() { return "ChampionRespawn"; }
+
+        static Value decode(Block &block) {
+            REQUIRE(block.size == 0xc);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("x", stream.read<float>());
+            data.setv("y", stream.read<float>());
+            data.setv("mana", stream.read<float>());
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */
