@@ -70,29 +70,31 @@ namespace libol {
 
         block.offset = pos;
 
-        REQUIRE(pos + 1 < len);
+        REQUIRE(pos + 1 <= len);
         block.header.marker = buf[pos++];
+
+        block.channel = block.header.marker & 0xf;
 
         // Bit 1: Time format
         block.header.timeIsAbs = !get_bit(block.header.marker, 0);
         if(block.header.timeIsAbs) {
-            REQUIRE(pos + 4 < len);
+            REQUIRE(pos + 4 <= len);
             memcpy(&block.header.timeAbs, buf + pos, sizeof(block.header.timeAbs));
             pos += 4;
         } else {
-            REQUIRE(pos + 1 < len);
+            REQUIRE(pos + 1 <= len);
             block.header.timeDiff = buf[pos++];
         }
 
         // Bit 4: Size size
         block.header.sizeIs32 = !get_bit(block.header.marker, 3);
         if(block.header.sizeIs32) {
-            REQUIRE(pos + 4 < len);
+            REQUIRE(pos + 4 <= len);
             memcpy(&block.header.size32, buf + pos, sizeof(block.header.size32));
             pos += 4;
             block.size = block.header.size32;
         } else {
-            REQUIRE(pos + 1 < len);
+            REQUIRE(pos + 1 <= len);
             block.header.size8 = buf[pos++];
             block.size = (unsigned) block.header.size8;
         }
@@ -107,17 +109,17 @@ namespace libol {
         // Bit 3: Blockdata size
         block.header.paramIs32 = !get_bit(block.header.marker, 2);
         if(block.header.paramIs32) {
-            REQUIRE(pos + 4 < len);
+            REQUIRE(pos + 4 <= len);
             memcpy(&block.header.param32, buf + pos, sizeof(block.header.param32));
             pos += 4;
         } else {
-            REQUIRE(pos + 1 < len);
+            REQUIRE(pos + 1 <= len);
             block.header.param8 = buf[pos++];
         }
 
         // Read content
         block.content.resize(block.size);
-        REQUIRE(pos + block.size < len);
+        REQUIRE(pos + block.size <= len);
         memcpy(block.content.data(), buf + pos, block.size);
         pos += block.size;
 
