@@ -601,6 +601,25 @@ namespace libol {
             return Value::create(data);
         }
     };
+
+    class SetLevelPkt {
+    public:
+        static const PacketType::Id type = PacketType::SetLevel;
+        static std::string name() { return "SetLevel"; }
+
+        static Value decode(Block &block) {
+            REQUIRE(block.size == 0x2);
+
+            Object data = Object();
+
+            auto stream = block.createStream();
+
+            data.setv("level", stream.read<uint8_t>());
+            data.setv("skillPoints", stream.read<uint8_t>());
+
+            return Value::create(data);
+        }
+    };
 }
 
 #endif /* defined(__libol__PacketDecoders__) */

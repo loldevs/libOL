@@ -16,6 +16,7 @@ namespace libol {
             SetAbilityLevel = 0x15,
             GoldReward = 0x22,
             SummonerData = 0x2A,
+            SetLevel = 0x3F,
             AttentionPing = 0x40,
             PlayEmote = 0x42,
             PlayerStats = 0x46,
