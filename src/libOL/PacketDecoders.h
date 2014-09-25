@@ -46,8 +46,8 @@ namespace libol {
 
             auto stream = block.createStream();
 
-            data.setv("killerEnt", stream.read<uint32_t>());
-            data.setv("killedEnt", stream.read<uint32_t>());
+            data.setv("receiverEntId", stream.read<uint32_t>());
+            data.setv("killedEntId", stream.read<uint32_t>());
             data.setv("amount", stream.read<float>());
 
             return Value::create(data);
@@ -66,7 +66,7 @@ namespace libol {
 
             auto stream = block.createStream();
 
-            data.setv("receiverEnt", stream.read<uint32_t>());
+            data.setv("receiverEntId", stream.read<uint32_t>());
             data.setv("amount", stream.read<float>());
 
             return Value::create(data);
@@ -89,7 +89,7 @@ namespace libol {
             for(size_t i = 0; i < items.size(); i++) {
                 items[i].setv("itemId", stream.read<uint32_t>());
                 items[i].setv("slotId", stream.get());
-                items[i].setv("quantity", stream.get());
+                items[i].setv("stacks", stream.get());
                 items[i].setv("charges", stream.get());
             }
 
@@ -124,7 +124,7 @@ namespace libol {
 
             data.setv("itemId", stream.read<uint32_t>());
             data.setv("slot", stream.get());
-            data.setv("quantity", stream.read<uint16_t>());
+            data.setv("stacks", stream.read<uint16_t>());
 
             //assert(block.content[0x7] == 0x40);
 
@@ -132,10 +132,10 @@ namespace libol {
         }
     };
 
-    class HeroSpawnPkt {
+    class ChampionSpawnPkt {
     public:
-        static const PacketType::Id type = PacketType::HeroSpawn;
-        static std::string name() { return "HeroSpawn"; }
+        static const PacketType::Id type = PacketType::ChampionSpawn;
+        static std::string name() { return "ChampionSpawn"; }
 
         static Value decode(Block& block) {
             REQUIRE(block.size == 0xC3);
@@ -202,12 +202,13 @@ namespace libol {
                 if(test != 0x03) break;
 
                 Object entry = Object();
-                entry.setv("id", stream.get());
-                entry.setv("tree", stream.get());
-                uint8_t byte = stream.get();
-                EXPECT(byte == 0x03);
-                byte = stream.get();
-                EXPECT(byte == 0x00);
+                uint8_t id = stream.get();
+                entry.setv("id", id);
+                uint8_t tree = stream.get();
+                entry.setv("tree", tree);
+                entry.setv("talentId", 4100 + (tree - 0x74) * 0x64 + ((id >> 4) - 0x03) * 0x0A + (id & 0x0F));
+                EXPECT(stream.get() == 0x03);
+                EXPECT(stream.get() == 0x00);
                 entry.setv("pointsSpent", stream.get());
                 masteries.pushv(entry);
             }
@@ -379,7 +380,7 @@ namespace libol {
 
             auto stream = block.createStream();
 
-            data.setv("owner", stream.read<uint32_t>());
+            data.setv("ownerEntId", stream.read<uint32_t>());
 
             return Value::create(data);
         }
@@ -477,7 +478,7 @@ namespace libol {
 
         static Value decode(Block& block) {
             if(block.size == 0x2) { // TODO: understand this
-                throw new ParseException("SetHealth: size is only 2 bytes");
+                throw ParseException("SetHealth: size is only 2 bytes");
             }
 
             REQUIRE(block.size == 0xa);
@@ -577,7 +578,7 @@ namespace libol {
             auto stream = block.createStream();
 
             data.setv("slotId", stream.get());
-            data.setv("quantity", stream.read<uint16_t>());
+            data.setv("stacks", stream.read<uint16_t>());
 
             return Value::create(data);
         }

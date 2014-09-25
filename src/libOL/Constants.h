@@ -21,7 +21,7 @@ namespace libol {
             AttentionPing = 0x40,
             PlayEmote = 0x42,
             PlayerStats = 0x46,
-            HeroSpawn = 0x4C,
+            ChampionSpawn = 0x4C,
             SetDeathTimer = 0x5E,
             MovementGroup = 0x61,
             StartSpawn,
@@ -120,7 +120,7 @@ namespace libol {
         enum : uint8_t {
             Handshake = 0,
             C2S = 1,
-            Gameplay =2,
+            Gameplay = 2,
             S2C = 3,
             LowPriority = 4,
             Communication = 5,

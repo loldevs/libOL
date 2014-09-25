@@ -34,7 +34,7 @@ namespace libol {
             registerPacket<GoldGainPkt>();
             registerPacket<SetInventoryPkt>();
             registerPacket<ItemPurchasePkt>();
-            registerPacket<HeroSpawnPkt>();
+            registerPacket<ChampionSpawnPkt>();
             registerPacket<SummonerDataPkt>();
             registerPacket<PlayerStatsPkt>();
             registerPacket<MovementGroupPkt>();
